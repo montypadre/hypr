@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3069441835849796938}
   - component: {fileID: 3069441835849796981}
   - component: {fileID: -8901850826197019479}
-  - component: {fileID: 6278185699868179503}
+  - component: {fileID: 1814383527452129625}
   m_Layer: 0
   m_Name: UAV Trident
   m_TagString: Player
@@ -171,13 +171,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32624fe0786568741a1e1db4061b3dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 90
-  movementSpeed: 150
+  rotationSpeed: 200
+  movementSpeed: 300
   lazer: {fileID: 1297853052993878302, guid: c62b62f6be203a04b92c13034a03a803, type: 3}
-  cooldown: 0.3
+  lazerFire: {fileID: 8300000, guid: c7a6a7d9eaf84c34da9cedd829d2838a, type: 3}
+  lazerVolume: 1
+  cooldown: 0.1
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}
---- !u!114 &6278185699868179503
+--- !u!114 &1814383527452129625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,11 +188,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3069441835849884124}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7162b5f709872c84ca0279f016a6856a, type: 3}
+  m_Script: {fileID: 11500000, guid: 73f83d4bdcbd3a941afa66548428e7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
   explosion: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
+  explosionClip: {fileID: 8300000, guid: 42dde8fcd0e96a946a9de5cae986e472, type: 3}
+  explosionVolume: 1
   scoreValue: 0
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}

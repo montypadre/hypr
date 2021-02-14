@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthController : MonoBehaviour
+public class AsteroidHealth : MonoBehaviour
 {
     public int health = 100;
     private int currentHealth = 0;
-    //private HealthController currentPlayerHealth;
 
     public GameObject explosion;
     private bool exploding = false;
@@ -20,7 +19,6 @@ public class HealthController : MonoBehaviour
     {
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         currentHealth = health;
-        //currentPlayerHealth = player.gameObject.GetComponent<HealthController>();
     }
 
     void Update()
@@ -34,8 +32,7 @@ public class HealthController : MonoBehaviour
     public void DealDamage(int damage)
     {
         currentHealth -= damage;
-        
-        //gameController.UpdateHealth(currentPlayerHealth.health);
+        Debug.Log("Asteroid Health " + currentHealth);
 
         if (currentHealth <= 0 && !exploding)
         {

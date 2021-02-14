@@ -14,13 +14,13 @@ public class LazerBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entering collision");
+        Debug.Log("Entering Asteroid collision");
 
-        HealthController healthController = other.gameObject.GetComponent<HealthController>();
+        AsteroidHealth asteroidHealth = other.gameObject.GetComponent<AsteroidHealth>();
 
-        if (healthController != null)
+        if (asteroidHealth != null)
         {
-            healthController.DealDamage(damage);
+            asteroidHealth.DealDamage(damage);
         }
 
         GameObject.Destroy(gameObject);

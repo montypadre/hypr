@@ -10,16 +10,12 @@ public class AsteroidController : MonoBehaviour
 
     void Start()
     {
-        GetComponent<Rigidbody>().AddForce(transform.forward * 100f);
-    }
-
-    void OnBecameInvisible()
-    {
-        Destroy(gameObject);
+        GetComponent<Rigidbody>().AddForce(transform.forward * 200f);
     }
 
     private void OnCollisionStay(Collision other)
     {
+        Debug.Log("Entering Player collision");
         if (other.gameObject.tag == "Player")
         {
             if (currentTime < damageCooldown)
@@ -30,13 +26,18 @@ public class AsteroidController : MonoBehaviour
             {
                 currentTime = 0f;
 
-                HealthController healthController = other.gameObject.GetComponent<HealthController>();
+                PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
 
-                if (healthController != null)
+                if (playerHealth != null)
                 {
-                    healthController.DealDamage(damage);
+                    playerHealth.DealDamage(damage);
                 }
             }
         }
+    }
+
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

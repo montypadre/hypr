@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
 
     public GameObject scoreValue;
     public GameObject gamePanel;
+    public HealthBar healthBar;
+    //PlayerHealth playerHealth;
     public GameObject gameOverPanel;
 
     bool isPlayerAlive = true;
@@ -38,6 +40,8 @@ public class GameController : MonoBehaviour
         // Setting the active panel
         gameOverPanel.SetActive(false);
         gamePanel.SetActive(true);
+
+        healthBar.SetMaxHealth(100);
 
         // Instantiating player
         player = Instantiate(player, new Vector3(0, 0, 0), Quaternion.Euler(-90, 0, 0));
@@ -116,8 +120,12 @@ public class GameController : MonoBehaviour
     {
         if (isPlayerAlive)
         {
-            if (scoreValue.GetComponent<Text>().text == "500")
-                SceneManager.LoadScene("Level1");
+            //playerHealth = player.gameObject.GetComponent<PlayerHealth>();
+            //healthBar.SetHealth(playerHealth.currentHealth);
+
+            // Send player to next level, possibly with a transition
+            //if (scoreValue.GetComponent<Text>().text == "500")
+            //    SceneManager.LoadScene("Level1");
 
             if (!FindPlayer())
             {
@@ -168,6 +176,11 @@ public class GameController : MonoBehaviour
     public void IncreaseScore(int score)
     {
         scoreValue.GetComponent<Text>().text = (Int64.Parse(scoreValue.GetComponent<Text>().text) + score).ToString();
+    }
+
+    public void UpdateHealth(int health)
+    {
+        healthBar.SetHealth(health);
     }
 
     public void PlayerDies()

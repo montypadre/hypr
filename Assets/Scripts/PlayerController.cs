@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed;
     public float movementSpeed;
     public GameObject lazer;
-    //public GameObject lazerFire;
+    public AudioClip lazerFire;
+    public float lazerVolume;
     public float cooldown = 1f;
     private float time = 0f;
     public GameController gameController;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.Space))
         {
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
-            //AudioSource.PlayClipAtPoint(transform.localPosition, 3);
+            AudioSource.PlayClipAtPoint(lazerFire, transform.localPosition, lazerVolume);
             time = cooldown;
         }
 
