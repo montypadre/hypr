@@ -23,10 +23,7 @@ public class AsteroidHealth : MonoBehaviour
 
     void Update()
     {
-        if (currentHealth <= 0 && !exploding)
-        {
-            StartCoroutine(Explode());
-        }
+        
     }
 
     public void DealDamage(int damage)
@@ -36,6 +33,7 @@ public class AsteroidHealth : MonoBehaviour
 
         if (currentHealth <= 0 && !exploding)
         {
+            StartCoroutine(Explode());
             if (scoreValue > 0)
             {
                 gameController.IncreaseScore(scoreValue);
@@ -48,9 +46,9 @@ public class AsteroidHealth : MonoBehaviour
         exploding = true;
         yield return new WaitForSeconds(0.1f);
         GameObject explosionGo = Instantiate(explosion, transform.position, Quaternion.Euler(0, 0, 0));
-        yield return 0;
         Destroy(gameObject, 0.5f);
         Destroy(explosionGo, 1f);
+        yield return 0;
         AudioSource.PlayClipAtPoint(explosionClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
         yield return new WaitForSeconds(0.1f);
         exploding = false;

@@ -428,14 +428,14 @@ RectTransform:
   m_GameObject: {fileID: 574836902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3.7986, y: 3.7986, z: 3.7986}
   m_Children: []
   m_Father: {fileID: 516025076}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 240, y: 17}
+  m_AnchoredPosition: {x: 456, y: 58}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &574836904
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 40
@@ -868,9 +868,32 @@ PrefabInstance:
       objectReference: {fileID: 516025075}
     - target: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
         type: 3}
+      propertyPath: spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
+        type: 3}
       propertyPath: gameOverExpire
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
+        type: 3}
+      propertyPath: asteroidObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 7463883130834532659, guid: a13882c87df109d46b6905b3a32441ae,
+        type: 3}
+    - target: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
+        type: 3}
+      propertyPath: asteroidObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 5306132787903099113, guid: 24b36df9314c7b24db353ab350a49681,
+        type: 3}
+    - target: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
+        type: 3}
+      propertyPath: asteroidObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 4638791482763092628, guid: 82996bbd703c52c479f9b5e4bb25270a,
+        type: 3}
     - target: {fileID: 846913901868589596, guid: 555488fc6af32a04ebb79e5072bc1e8d,
         type: 3}
       propertyPath: m_RootOrder
@@ -964,7 +987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 389.9, y: 257.3}
+  m_AnchoredPosition: {x: 303, y: 306}
   m_SizeDelta: {x: 50.473923, y: 7.9850464}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1677173638

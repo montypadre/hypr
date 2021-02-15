@@ -10,7 +10,7 @@ public class AsteroidController : MonoBehaviour
 
     void Start()
     {
-        GetComponent<Rigidbody>().AddForce(transform.forward * 200f);
+        GetComponent<Rigidbody>().AddForce(transform.forward * 700f);
     }
 
     private void OnCollisionStay(Collision other)

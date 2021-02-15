@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public GameObject player;
-    public GameObject asteroid;
+    public GameObject[] asteroidObjects;
+    
 
     public float maxRange = 10f;
     public float minRange = 5f;
@@ -30,7 +31,6 @@ public class GameController : MonoBehaviour
     public GameObject scoreValue;
     public GameObject gamePanel;
     public HealthBar healthBar;
-    //PlayerHealth playerHealth;
     public GameObject gameOverPanel;
 
     bool isPlayerAlive = true;
@@ -51,6 +51,11 @@ public class GameController : MonoBehaviour
         this.maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, -Camera.main.transform.position.z)).y;
         this.minX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -Camera.main.transform.position.z)).x;
         this.maxX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, -Camera.main.transform.position.z)).x;
+
+        for (var i = 0; i < asteroidObjects.Length; i++)
+        {
+            Debug.Log(asteroidObjects[i].name);
+        }
     }
 
     public Vector3 GetNewPosition(Vector3 position)
@@ -108,7 +113,7 @@ public class GameController : MonoBehaviour
             targetPending = colliders.Length > 0;
         }
 
-        GameObject asteroidObject = Instantiate(asteroid, new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+        GameObject asteroidObject = Instantiate(asteroidObjects[UnityEngine.Random.Range(0, asteroidObjects.Length)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
 
         asteroidObject.transform.LookAt(screenCenter);
         float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
@@ -120,12 +125,28 @@ public class GameController : MonoBehaviour
     {
         if (isPlayerAlive)
         {
-            //playerHealth = player.gameObject.GetComponent<PlayerHealth>();
-            //healthBar.SetHealth(playerHealth.currentHealth);
+            // As player score increases, decrease spawn interval for asteroids
+            if (Int64.Parse(scoreValue.GetComponent<Text>().text) < 1000)
+            {
+                spawnInterval = 3f;
+            }
+            else if (Int64.Parse(scoreValue.GetComponent<Text>().text) > 1000 && Int64.Parse(scoreValue.GetComponent<Text>().text) < 5000)
+            {
+                spawnInterval = 2f;
+            }
+            else if (Int64.Parse(scoreValue.GetComponent<Text>().text) > 5000 && Int64.Parse(scoreValue.GetComponent<Text>().text) < 10000)
+            {
+                spawnInterval = 1f;
+            }
+            else if (Int64.Parse(scoreValue.GetComponent<Text>().text) > 10000 && Int64.Parse(scoreValue.GetComponent<Text>().text) < 50000)
+            {
+                spawnInterval = 0.5f;
+            }
+            else
+            {
+                spawnInterval = 0.1f;
+            }
 
-            // Send player to next level, possibly with a transition
-            //if (scoreValue.GetComponent<Text>().text == "500")
-            //    SceneManager.LoadScene("Level1");
 
             if (!FindPlayer())
             {

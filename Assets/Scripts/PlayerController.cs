@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        GetComponent<Rigidbody>().freezeRotation = true;
     }
 
     void OnDestroy()
