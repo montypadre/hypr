@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
     public GameObject scoreValue;
     public GameObject gamePanel;
     public HealthBar healthBar;
+    public ShieldBar shieldBar;
     public GameObject gameOverPanel;
 
     bool isPlayerAlive = true;
@@ -39,6 +40,7 @@ public class GameController : MonoBehaviour
     {
         // Setting the active panel
         gameOverPanel.SetActive(false);
+        shieldBar.gameObject.SetActive(false);
         gamePanel.SetActive(true);
 
         healthBar.SetMaxHealth(100);
@@ -202,6 +204,17 @@ public class GameController : MonoBehaviour
     public void UpdateHealth(int health)
     {
         healthBar.SetHealth(health);
+    }
+
+    public void UpdateShield(int shield)
+    {
+        shieldBar.SetShield(shield);
+    }
+
+    public void EngageShield()
+    {
+        shieldBar.SetMaxShield(100);
+        shieldBar.gameObject.SetActive(true);
     }
 
     public void PlayerDies()

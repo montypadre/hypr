@@ -12,6 +12,9 @@ public class AsteroidHealth : MonoBehaviour
     public AudioClip explosionClip;
     public float explosionVolume;
 
+    public GameObject[] powerUps;
+    public float percentDrop;
+
     public int scoreValue = 0;
     public GameController gameController;
 
@@ -29,7 +32,6 @@ public class AsteroidHealth : MonoBehaviour
     public void DealDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log("Asteroid Health " + currentHealth);
 
         if (currentHealth <= 0 && !exploding)
         {
@@ -43,6 +45,7 @@ public class AsteroidHealth : MonoBehaviour
 
     IEnumerator Explode()
     {
+        float rand = UnityEngine.Random.Range(0f, 100f);
         exploding = true;
         yield return new WaitForSeconds(0.1f);
         GameObject explosionGo = Instantiate(explosion, transform.position, Quaternion.Euler(0, 0, 0));
@@ -52,5 +55,10 @@ public class AsteroidHealth : MonoBehaviour
         AudioSource.PlayClipAtPoint(explosionClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
         yield return new WaitForSeconds(0.1f);
         exploding = false;
+
+        if (rand < percentDrop)
+        {
+            GameObject powerUp = Instantiate(powerUps[UnityEngine.Random.Range(0, powerUps.Length)]);
+        }
     }
 }
