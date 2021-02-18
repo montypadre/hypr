@@ -288,7 +288,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 8
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &4638791482769973766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +350,7 @@ MonoBehaviour:
   powerUps:
   - {fileID: 9219741588669985561, guid: cf673cc99b0495549bc12c8067811326, type: 3}
   - {fileID: 405737729430129674, guid: 5cf53ce88e0387b4cb59c57279905ace, type: 3}
-  percentDrop: 5
+  percentDrop: 1
   scoreValue: 100
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}

@@ -13,8 +13,6 @@ public class HighScoreMenu : MonoBehaviour
     {
         playerName.text = (PlayerPrefs.GetString("PlayerName", ""));
         highScore.text = (PlayerPrefs.GetInt("HighScore", 0)).ToString();
-        Debug.Log(highScore);
-        Debug.Log(playerName);
     }
 
     // Update is called once per frame

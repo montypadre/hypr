@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
+        gameController.SaveHighScore();
         gameController.PlayerDies();
     }
 
@@ -37,16 +38,16 @@ public class PlayerController : MonoBehaviour
             time = cooldown;
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             GetComponent<Rigidbody>().AddForce(transform.forward * movementSpeed * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             GetComponent<Rigidbody>().AddForce(transform.forward * -movementSpeed * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
     }
 }

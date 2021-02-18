@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
 
     public GameObject scoreValue;
     public Text highScore;
+    private bool isHighScore = false;
     public GameObject gamePanel;
     public HealthBar healthBar;
     public ShieldBar shieldBar;
@@ -162,7 +163,6 @@ public class GameController : MonoBehaviour
             if (!FindPlayer())
             {
                 playerExpire -= Time.deltaTime;
-                Debug.Log(playerExpire);
                 if (playerExpire <= 0)
                 {
                     PlayerDies();
@@ -191,7 +191,7 @@ public class GameController : MonoBehaviour
                 Debug.Log(playerNameInput.text);
             }
 
-            if (gamePanel.activeSelf)
+            if (!highScorePanel.activeSelf)
             {
                 if (time < gameOverDelay)
                 {
@@ -231,7 +231,16 @@ public class GameController : MonoBehaviour
 
     public void SaveHighScore()
     {
-        PlayerPrefs.SetInt("HighScore", Convert.ToInt32(scoreValue.GetComponent<Text>().text));
+        if (Convert.ToInt32(scoreValue.GetComponent<Text>().text) > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            isHighScore = true;
+            highScorePanel.SetActive(true);
+            PlayerPrefs.SetInt("HighScore", Convert.ToInt32(scoreValue.GetComponent<Text>().text));
+        }
+        else
+        {
+            gameOverPanel.SetActive(true);
+        }
     }
 
     public void UpdateHealth(int health)
@@ -274,19 +283,8 @@ public class GameController : MonoBehaviour
 
     public void PlayerDies()
     {
-        if (Convert.ToInt32(scoreValue.GetComponent<Text>().text) > PlayerPrefs.GetInt("HighScore", 0))
-        {
-            gameOverPanel.SetActive(false);
-            highScorePanel.SetActive(true);
-            SaveHighScore();
-        }
-        else
-        {
-            gamePanel.SetActive(true);
-        }
-        isPlayerAlive = false;
-        //gameOverPanel.SetActive(true);
         gamePanel.SetActive(false);
+        isPlayerAlive = false;
         time = 0.0f;
     }
 }
