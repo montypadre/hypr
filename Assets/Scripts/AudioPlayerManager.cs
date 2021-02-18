@@ -12,7 +12,8 @@ public class AudioPlayerManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.gameObject);
+            audio = GetComponent<AudioSource>();
             return;
         }
         if (instance == this) return;
@@ -21,8 +22,12 @@ public class AudioPlayerManager : MonoBehaviour
 
     void Start()
     {
-        audio = GetComponent<AudioSource>();
         audio.Play();
+    }
+
+    void Stop()
+    {
+        audio.Stop();
     }
 
 }

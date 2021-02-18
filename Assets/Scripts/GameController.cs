@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public GameObject player;
+    public InputField playerNameInput;
+    public string playerName;
     public GameObject[] asteroidObjects;
     
 
@@ -27,19 +29,26 @@ public class GameController : MonoBehaviour
 
     public float gameOverDelay = 1f;
     public float gameOverExpire = 10f;
+    public float playerExpire = 30f;
 
     public GameObject scoreValue;
+    public Text highScore;
     public GameObject gamePanel;
     public HealthBar healthBar;
     public ShieldBar shieldBar;
+    public GameObject highScorePanel;
     public GameObject gameOverPanel;
+    private int playerShield;
+    private int currentPlayerShield;
 
     bool isPlayerAlive = true;
+    bool areShieldsUp = false;
 
     void Start()
     {
         // Setting the active panel
         gameOverPanel.SetActive(false);
+        highScorePanel.SetActive(false);
         shieldBar.gameObject.SetActive(false);
         gamePanel.SetActive(true);
 
@@ -152,7 +161,17 @@ public class GameController : MonoBehaviour
 
             if (!FindPlayer())
             {
+                playerExpire -= Time.deltaTime;
+                Debug.Log(playerExpire);
+                if (playerExpire <= 0)
+                {
+                    PlayerDies();
+                }
                 player.transform.position = GetNewPosition(player.transform.position);
+            }
+            else
+            {
+                playerExpire = 30f;
             }
 
             time += Time.deltaTime;
@@ -166,13 +185,22 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (time < gameOverDelay)
+            if (Input.GetKeyUp(KeyCode.Return))
             {
-                time = time + Time.deltaTime;
+                PlayerPrefs.SetString("PlayerName", playerNameInput.text);
+                Debug.Log(playerNameInput.text);
             }
-            else if (Input.anyKey || time > gameOverExpire)
+
+            if (gamePanel.activeSelf)
             {
-                SceneManager.LoadScene("MainMenuScene");
+                if (time < gameOverDelay)
+                {
+                    time = time + Time.deltaTime;
+                }
+                else if (Input.anyKey || time > gameOverExpire)
+                {
+                    SceneManager.LoadScene("MainMenu");
+                }
             }
         }
     }
@@ -201,9 +229,36 @@ public class GameController : MonoBehaviour
         scoreValue.GetComponent<Text>().text = (Int64.Parse(scoreValue.GetComponent<Text>().text) + score).ToString();
     }
 
+    public void SaveHighScore()
+    {
+        PlayerPrefs.SetInt("HighScore", Convert.ToInt32(scoreValue.GetComponent<Text>().text));
+    }
+
     public void UpdateHealth(int health)
     {
         healthBar.SetHealth(health);
+    }
+
+    public void EngageShield()
+    {
+        playerShield = player.GetComponent<PlayerHealth>().GetShield();
+        shieldBar.SetMaxShield(100);
+        player.GetComponent<PlayerHealth>().SetCurrentShield(100);
+        shieldBar.gameObject.SetActive(true);
+
+        areShieldsUp = true;
+    }
+
+    public void DisengageShield()
+    {
+        shieldBar.gameObject.SetActive(false);
+
+        areShieldsUp = false;
+    }
+
+    public bool ShieldsUp()
+    {
+        return areShieldsUp;
     }
 
     public void UpdateShield(int shield)
@@ -211,16 +266,26 @@ public class GameController : MonoBehaviour
         shieldBar.SetShield(shield);
     }
 
-    public void EngageShield()
+    public void Reset()
     {
-        shieldBar.SetMaxShield(100);
-        shieldBar.gameObject.SetActive(true);
+        PlayerPrefs.DeleteKey("HighScore");
+        highScore.text = "0";
     }
 
     public void PlayerDies()
     {
+        if (Convert.ToInt32(scoreValue.GetComponent<Text>().text) > PlayerPrefs.GetInt("HighScore", 0))
+        {
+            gameOverPanel.SetActive(false);
+            highScorePanel.SetActive(true);
+            SaveHighScore();
+        }
+        else
+        {
+            gamePanel.SetActive(true);
+        }
         isPlayerAlive = false;
-        gameOverPanel.SetActive(true);
+        //gameOverPanel.SetActive(true);
         gamePanel.SetActive(false);
         time = 0.0f;
     }

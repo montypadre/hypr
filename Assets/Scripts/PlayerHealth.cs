@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int health = 100;
     private int currentHealth = 0;
-    private int currentShield = 100;
+    public int currentShield = 100;
 
     public GameObject explosion;
     private bool exploding = false;
@@ -37,13 +37,24 @@ public class PlayerHealth : MonoBehaviour
         return currentShield;
     }
 
+    public void SetCurrentShield(int shield)
+    {
+        currentShield = shield;
+    }
+
     public void DealDamage(int damage)
     {
-        if (currentShield >= 1)
+        if (gameController.ShieldsUp() == true && currentShield > 0)
         {
             currentShield -= damage;
             gameController.UpdateShield(currentShield);
-        } 
+        }
+        else if (currentShield <= 0)
+        {
+            gameController.DisengageShield();
+            currentHealth -= damage;
+            gameController.UpdateHealth(currentHealth);
+        }
         else
         {
             currentHealth -= damage;

@@ -58,7 +58,7 @@ public class AsteroidHealth : MonoBehaviour
 
         if (rand < percentDrop)
         {
-            GameObject powerUp = Instantiate(powerUps[UnityEngine.Random.Range(0, powerUps.Length)]);
+            GameObject powerUp = Instantiate(powerUps[UnityEngine.Random.Range(0, powerUps.Length)], transform.position, transform.rotation);
         }
     }
 }
