@@ -288,7 +288,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 8
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!114 &4638791482769973766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,7 +329,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  damageCooldown: 0.5
+  impact: {fileID: 8300000, guid: cc4e4e27757d7f04eb14099d151cdffe, type: 3}
+  damageCooldown: 0.3
   currentTime: 0
 --- !u!114 &4638791482763009703
 MonoBehaviour:

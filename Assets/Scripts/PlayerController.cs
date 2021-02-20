@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
-            AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
+            AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
             time = cooldown;
         }
 

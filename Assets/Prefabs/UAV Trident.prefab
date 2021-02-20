@@ -130,7 +130,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 72
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &3069441835849796938
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -143,7 +143,7 @@ CapsuleCollider:
   m_Enabled: 1
   m_Radius: 0.7
   m_Height: 2
-  m_Direction: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &3069441835849796981
 CapsuleCollider:
@@ -157,7 +157,7 @@ CapsuleCollider:
   m_Enabled: 1
   m_Radius: 1.3
   m_Height: 1.2
-  m_Direction: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0.2}
 --- !u!114 &-8901850826197019479
 MonoBehaviour:
@@ -175,7 +175,7 @@ MonoBehaviour:
   movementSpeed: 700
   lazer: {fileID: 1297853052993878302, guid: c62b62f6be203a04b92c13034a03a803, type: 3}
   lazerFire: {fileID: 8300000, guid: 45bfe6b47841e824a81896a83fc9187d, type: 3}
-  lazerVolume: 1
+  lazerVolume: 0.7
   cooldown: 0.1
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}
