@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7463883130834379971}
   - component: {fileID: 7463883130831469189}
+  - component: {fileID: -2123161205670678665}
   - component: {fileID: 7463883130840038967}
-  - component: {fileID: 6344472030184106676}
   - component: {fileID: 7463883130834676061}
   - component: {fileID: 7463883130834676062}
   m_Layer: 0
@@ -52,20 +52,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 1
---- !u!114 &7463883130840038967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7463883130834532659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a718c138b20419b499c3d92b17e6ff7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tumble: 0.25
---- !u!136 &6344472030184106676
+--- !u!136 &-2123161205670678665
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,6 +66,19 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0.05, y: -0.08, z: 0}
+--- !u!114 &7463883130840038967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7463883130834532659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a718c138b20419b499c3d92b17e6ff7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tumble: 0.25
 --- !u!114 &7463883130834676061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ef5a3fe9298c043805337ea7ad52a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 20
   damageCooldown: 0.5
   currentTime: 0
 --- !u!114 &7463883130834676062
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
-  explosionClip: {fileID: 8300000, guid: 62fe6c0c3fddef242a6a52fb6be9b4d9, type: 3}
+  explosionClip: {fileID: 8300000, guid: a205a058180f867448b8ee9434cbffa4, type: 3}
   explosionVolume: 1
   powerUps:
   - {fileID: 9219741588669985561, guid: cf673cc99b0495549bc12c8067811326, type: 3}

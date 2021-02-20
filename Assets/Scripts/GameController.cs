@@ -33,7 +33,6 @@ public class GameController : MonoBehaviour
 
     public GameObject scoreValue;
     public Text highScore;
-    private bool isHighScore = false;
     public GameObject gamePanel;
     public HealthBar healthBar;
     public ShieldBar shieldBar;
@@ -154,11 +153,6 @@ public class GameController : MonoBehaviour
             {
                 spawnInterval = 0.5f;
             }
-            else
-            {
-                spawnInterval = 0.1f;
-            }
-
 
             if (!FindPlayer())
             {
@@ -185,7 +179,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyUp(KeyCode.Return))
+            if (Input.anyKey)
             {
                 PlayerPrefs.SetString("PlayerName", playerNameInput.text);
                 Debug.Log(playerNameInput.text);
@@ -233,7 +227,6 @@ public class GameController : MonoBehaviour
     {
         if (Convert.ToInt32(scoreValue.GetComponent<Text>().text) > PlayerPrefs.GetInt("HighScore", 0))
         {
-            isHighScore = true;
             highScorePanel.SetActive(true);
             PlayerPrefs.SetInt("HighScore", Convert.ToInt32(scoreValue.GetComponent<Text>().text));
         }

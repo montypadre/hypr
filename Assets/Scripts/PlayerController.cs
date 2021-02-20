@@ -34,20 +34,48 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.Space))
         {
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
-            AudioSource.PlayClipAtPoint(lazerFire, transform.localPosition, lazerVolume);
+            AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
             time = cooldown;
         }
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        {
             GetComponent<Rigidbody>().AddForce(transform.forward * movementSpeed * Time.deltaTime);
+        }
 
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        {
             GetComponent<Rigidbody>().AddForce(transform.forward * -movementSpeed * Time.deltaTime);
+        }
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
             transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime);
+        }
 
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        }
+           
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            GetComponent<Rigidbody>().AddForce(transform.forward * movementSpeed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            GetComponent<Rigidbody>().AddForce(transform.forward * -movementSpeed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        }
     }
 }

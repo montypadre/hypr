@@ -108,4 +108,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}
-  shieldPowerUpClip: {fileID: 8300000, guid: 648dd545eb929744789e48ffb7164012, type: 3}
+  shieldPowerUpClip: {fileID: 8300000, guid: 0070cd1d440ae4b459fb7c8b9fb410ff, type: 3}
