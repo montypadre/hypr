@@ -31,29 +31,29 @@ public class PlayerController : MonoBehaviour
         {
             time -= Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
             AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
             time = cooldown;
         }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W))
         {
             GetComponent<Rigidbody>().AddForce(transform.forward * movementSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S))
         {
             GetComponent<Rigidbody>().AddForce(transform.forward * -movementSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
         }
