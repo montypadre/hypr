@@ -89,8 +89,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5306132787902846567}
   - component: {fileID: 5306132787908423805}
+  - component: {fileID: 6845491955497555865}
   - component: {fileID: 2005846331676405952}
-  - component: {fileID: 5306132788110073230}
   - component: {fileID: -1781966556572495542}
   - component: {fileID: -3231952841459946203}
   m_Layer: 0
@@ -131,6 +131,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 3
+--- !u!64 &6845491955497555865
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5306132787903099113}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 4fc98ba1e54e0f64aa2c95885ef7026e, type: 3}
 --- !u!114 &2005846331676405952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,20 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tumble: 0.25
---- !u!136 &5306132788110073230
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5306132787903099113}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.9
-  m_Height: 3.79
-  m_Direction: 1
-  m_Center: {x: 0.04, y: 0.33, z: 0}
 --- !u!114 &-1781966556572495542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   impact: {fileID: 8300000, guid: cc4e4e27757d7f04eb14099d151cdffe, type: 3}
-  damageCooldown: 0.3
+  damageCooldown: 0.2
   currentTime: 0
 --- !u!114 &-3231952841459946203
 MonoBehaviour:

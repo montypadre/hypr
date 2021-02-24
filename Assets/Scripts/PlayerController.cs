@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
-        gameController.SaveHighScore();
+        gameController.StoreScore();
         gameController.PlayerDies();
     }
 

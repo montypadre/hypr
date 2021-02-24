@@ -9,7 +9,6 @@ public class GameController : MonoBehaviour
 {
     public GameObject player;
     public InputField playerNameInput;
-    public string playerName;
     public GameObject[] asteroidObjects;
     
 
@@ -58,15 +57,12 @@ public class GameController : MonoBehaviour
         player = Instantiate(player, new Vector3(0, 0, 0), Quaternion.Euler(-90, 0, 0));
         screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 0));
 
+        isPlayerAlive = true;
+
         this.minY = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -Camera.main.transform.position.z)).y;
         this.maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, -Camera.main.transform.position.z)).y;
         this.minX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -Camera.main.transform.position.z)).x;
         this.maxX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, -Camera.main.transform.position.z)).x;
-
-        for (var i = 0; i < asteroidObjects.Length; i++)
-        {
-            Debug.Log(asteroidObjects[i].name);
-        }
     }
 
     public Vector3 GetNewPosition(Vector3 position)
@@ -107,7 +103,7 @@ public class GameController : MonoBehaviour
         {
             if (UnityEngine.Random.value > 0.5f)
             {
-                Range[] rangesX = new Range[] { new Range(minX - maxRange, minX - minRange), new Range(maxX + minRange, maxX - maxRange) };
+                Range[] rangesX = new Range[] { new Range(minX - maxRange, minX - minRange), new Range(maxX + minRange, maxX + maxRange) };
                 spawnX = RandomValueFromRanges(rangesX);
                 spawnY = UnityEngine.Random.Range(minY - maxRange, maxY + maxRange);
             }
@@ -179,12 +175,6 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            if (Input.anyKey)
-            {
-                PlayerPrefs.SetString("PlayerName", playerNameInput.text);
-                Debug.Log(playerNameInput.text);
-            }
-
             if (!highScorePanel.activeSelf)
             {
                 if (time < gameOverDelay)
@@ -223,16 +213,29 @@ public class GameController : MonoBehaviour
         scoreValue.GetComponent<Text>().text = (Int64.Parse(scoreValue.GetComponent<Text>().text) + score).ToString();
     }
 
-    public void SaveHighScore()
+    public void StoreScore()
     {
-        if (Convert.ToInt32(scoreValue.GetComponent<Text>().text) > PlayerPrefs.GetInt("HighScore", 0))
+        if (scoreValue.GetComponent<Text>().text != null)
         {
-            highScorePanel.SetActive(true);
-            PlayerPrefs.SetInt("HighScore", Convert.ToInt32(scoreValue.GetComponent<Text>().text));
+            LB_Entry[] entries = LB_Controller.instance.Entries();
+            for (int i = 0; i < entries.Length; i++)
+            {
+                if (Int64.Parse(scoreValue.GetComponent<Text>().text) > entries[i].points)
+                {
+                    highScorePanel.SetActive(true);
+                    playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
+                    break;
+                }
+                else if (Int64.Parse(scoreValue.GetComponent<Text>().text) < entries[entries.Length - 1].points)
+                {
+                    gamePanel.SetActive(false);
+                    gameOverPanel.SetActive(true);
+                }
+            }
         }
-        else
+        else 
         {
-            gameOverPanel.SetActive(true);
+            scoreValue.GetComponent<Text>().text = "0";
         }
     }
 
@@ -268,15 +271,8 @@ public class GameController : MonoBehaviour
         shieldBar.SetShield(shield);
     }
 
-    public void Reset()
-    {
-        PlayerPrefs.DeleteKey("HighScore");
-        highScore.text = "0";
-    }
-
     public void PlayerDies()
     {
-        gamePanel.SetActive(false);
         isPlayerAlive = false;
         time = 0.0f;
     }

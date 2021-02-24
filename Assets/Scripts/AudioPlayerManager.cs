@@ -12,7 +12,6 @@ public class AudioPlayerManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(transform.gameObject);
             audio = GetComponent<AudioSource>();
             return;
         }

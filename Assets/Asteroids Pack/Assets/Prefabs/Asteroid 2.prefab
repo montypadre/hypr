@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 446090}
   - component: {fileID: 5499024}
   - component: {fileID: 11421226}
-  - component: {fileID: 8050556030505764793}
   - component: {fileID: 6425323530446730345}
   - component: {fileID: -2805809576976138675}
   m_Layer: 0
@@ -144,20 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tumble: 0.25
---- !u!136 &8050556030505764793
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141316}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6425323530446730345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  impact: {fileID: 0}
   damageCooldown: 0.5
   currentTime: 0
 --- !u!114 &-2805809576976138675
@@ -189,6 +175,8 @@ MonoBehaviour:
   explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   explosionClip: {fileID: 8300000, guid: 62fe6c0c3fddef242a6a52fb6be9b4d9, type: 3}
   explosionVolume: 1
+  powerUps: []
+  percentDrop: 0
   scoreValue: 100
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}

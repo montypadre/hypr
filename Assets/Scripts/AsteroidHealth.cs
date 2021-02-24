@@ -47,13 +47,13 @@ public class AsteroidHealth : MonoBehaviour
     {
         float rand = UnityEngine.Random.Range(0f, 100f);
         exploding = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
         GameObject explosionGo = Instantiate(explosion, transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(gameObject, 0.5f);
         Destroy(explosionGo, 1f);
         yield return 0;
         AudioSource.PlayClipAtPoint(explosionClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.01f);
         exploding = false;
 
         if (rand < percentDrop)
