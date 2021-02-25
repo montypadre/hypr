@@ -40,7 +40,7 @@ public class LB_GetAllScores : MonoBehaviour
 			
 			
 			if (requestResult.status.code != 0) {
-				Debug.LogWarning(requestResult.status.msg);
+				//Debug.LogWarning(requestResult.status.msg);
 				OnFinishedDelegate?.Invoke(null);
 			} else {
 				LeaderboardResult res = JsonUtility.FromJson<LeaderboardResult>(result);

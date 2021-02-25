@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public GameObject player;
     public InputField playerNameInput;
     public GameObject[] asteroidObjects;
-    
+
 
     public float maxRange = 10f;
     public float minRange = 5f;
@@ -215,16 +215,16 @@ public class GameController : MonoBehaviour
 
     public void StoreScore()
     {
+        LB_Entry[] entries = LB_Controller.instance.Entries();
         if (scoreValue.GetComponent<Text>().text != null)
         {
-            LB_Entry[] entries = LB_Controller.instance.Entries();
-            for (int i = 0; i < entries.Length; i++)
+        for (int i = 0; i < entries.Length; i++)
             {
                 if (Int64.Parse(scoreValue.GetComponent<Text>().text) > entries[i].points)
                 {
                     highScorePanel.SetActive(true);
                     playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
-                    break;
+                    playerNameInput.onEndEdit.AddListener(delegate { SceneManager.LoadScene("MainMenu"); });
                 }
                 else if (Int64.Parse(scoreValue.GetComponent<Text>().text) < entries[entries.Length - 1].points)
                 {

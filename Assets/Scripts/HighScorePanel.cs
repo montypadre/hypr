@@ -10,8 +10,6 @@ public class HighScorePanel : MonoBehaviour
         
     }
 
-    
-
     public void LoadMenu()
     {
         Time.timeScale = 1f;

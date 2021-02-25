@@ -14,8 +14,6 @@ public class LazerBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entering Asteroid collision");
-
         AsteroidHealth asteroidHealth = other.gameObject.GetComponent<AsteroidHealth>();
 
         if (asteroidHealth != null)

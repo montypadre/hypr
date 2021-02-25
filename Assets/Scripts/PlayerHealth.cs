@@ -59,6 +59,10 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth -= damage;
             gameController.UpdateHealth(currentHealth);
+            //if (currentHealth <= 20)
+            //{
+            //    AudioSource.PlayClipAtPoint(alarm, 0.9f * Camera.main.transform.position + 0.1f * transform.position, alarmVolume);
+            //}
         }
 
         if (currentHealth <= 0 && !exploding)

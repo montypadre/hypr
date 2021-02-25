@@ -195,7 +195,9 @@ MonoBehaviour:
   currentShield: 100
   explosion: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
   explosionClip: {fileID: 8300000, guid: 6bbe7280a2adc3646a6f096ba4986db6, type: 3}
+  alarm: {fileID: 8300000, guid: 0a4a42dc90418364eb147916e4c49d47, type: 3}
   explosionVolume: 1
+  alarmVolume: 1
   scoreValue: 0
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}

@@ -7,11 +7,20 @@ public class HealthPowerUp : MonoBehaviour
     public GameObject pickupEffect;
     public AudioClip healthPowerUpClip;
     private int health;
+    private bool powerupActive;
     public GameController gameController;
 
     void Start()
     {
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+    }
+
+    void Update()
+    {
+        if (!powerupActive)
+        {
+            StartCoroutine(PowerUp(10f));
+        }
     }
 
     void OnTriggerEnter (Collider other)
@@ -23,7 +32,7 @@ public class HealthPowerUp : MonoBehaviour
     }
 
     void Pickup(Collider player)
-    {
+    { 
         AudioSource.PlayClipAtPoint(healthPowerUpClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
         pickupEffect = Instantiate(pickupEffect, transform.position, transform.rotation);
 
@@ -41,5 +50,13 @@ public class HealthPowerUp : MonoBehaviour
 
         Destroy(gameObject);
         Destroy(pickupEffect, .15f);
+    }
+
+    IEnumerator PowerUp(float duration)
+    {
+        powerupActive = true;
+        yield return new WaitForSeconds(duration);
+        powerupActive = false;
+        Destroy(gameObject);
     }
 }

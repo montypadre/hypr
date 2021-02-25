@@ -16,7 +16,6 @@ public class AsteroidController : MonoBehaviour
 
     private void OnCollisionStay(Collision other)
     {
-        Debug.Log("Entering Player collision");
         if (other.gameObject.tag == "Player")
         {
             if (currentTime < damageCooldown)
