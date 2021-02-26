@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  impact: {fileID: 8300000, guid: cc4e4e27757d7f04eb14099d151cdffe, type: 3}
+  impact: {fileID: 8300000, guid: 91f683ce0d552b24b9d825b2e340f0be, type: 3}
   damageCooldown: 0.2
   currentTime: 0
 --- !u!114 &7463883130834676062
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   explosion: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
-  explosionClip: {fileID: 8300000, guid: a205a058180f867448b8ee9434cbffa4, type: 3}
+  explosionClip: {fileID: 8300000, guid: df44a13d5f8bfef4dae87d97c2ccd814, type: 3}
   explosionVolume: 1
   powerUps:
   - {fileID: 9219741588669985561, guid: cf673cc99b0495549bc12c8067811326, type: 3}
