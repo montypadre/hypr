@@ -21,7 +21,7 @@ public class HighScoreController : MonoBehaviour
 
     private void OnLeaderboardUpdated(LB_Entry[] entries) {
         if (entries != null && entries.Length > 0) {
-            for (int i = 0; i < entries.Length - 1; i++)
+            for (int i = 0; i <= 4; i++)
             {
                 names[i].text = entries[i].name;
                 scores[i].text = entries[i].points.ToString();

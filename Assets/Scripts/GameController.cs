@@ -216,13 +216,14 @@ public class GameController : MonoBehaviour
     public void StoreScore()
     {
         LB_Entry[] entries = LB_Controller.instance.Entries();
-        if (scoreValue.GetComponent<Text>().text != null)
+        if (scoreValue != null)
         {
         for (int i = 0; i < entries.Length; i++)
             {
                 if (Int64.Parse(scoreValue.GetComponent<Text>().text) > entries[i].points)
                 {
                     highScorePanel.SetActive(true);
+                    playerNameInput.Select();
                     playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
                     playerNameInput.onEndEdit.AddListener(delegate { SceneManager.LoadScene("MainMenu"); });
                 }
@@ -235,7 +236,7 @@ public class GameController : MonoBehaviour
         }
         else 
         {
-            scoreValue.GetComponent<Text>().text = "0";
+            return;
         }
     }
 
