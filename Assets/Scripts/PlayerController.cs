@@ -79,29 +79,6 @@ public class PlayerController : MonoBehaviour
                 transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
             }
 #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.touches[0];
-
-                if (touch.phase == TouchPhase.Began)
-                {
-                    touchOrigin = touch.position;
-                }
-                else if
-                {
-                    Vector 2 touchEnd = touch.position;
-
-                    float x = touchEnd.x - touchOrigin.x;
-                    float y = touchEnd.y - touchOrigin.y;
-
-                    touchOrigin.x = -1;
-
-                    if (Mathf.Abs(x) > Mathf.Abs(y))
-                        horizontal = x > 0 ? 1 : -1;
-                    else
-                        vertical = y > 0 ? 1 : -1;
-                }
-            }
 
 #endif
 
