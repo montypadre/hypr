@@ -4,6 +4,9 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+// use web3.jslib
+using System.Runtime.InteropServices;
+
 
 public class GameController : MonoBehaviour
 {
@@ -42,6 +45,14 @@ public class GameController : MonoBehaviour
 
     bool isPlayerAlive = true;
     bool areShieldsUp = false;
+
+    // use WalletAddress function from web3.jslib
+    [DllImport("__Internal")] private static extern string WalletAddress();
+
+    void Awake()
+    {
+        Debug.Log("Player Wallet Address: " + WalletAddress());
+    }
 
     void Start()
     {
@@ -224,6 +235,8 @@ public class GameController : MonoBehaviour
                 {
                     highScorePanel.SetActive(true);
                     playerNameInput.Select();
+                    // Store wallet address
+                    playerNameInput.onEndEdit.AddListener(delegate { });
                     playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
                     playerNameInput.onEndEdit.AddListener(delegate { SceneManager.LoadScene("MainMenu"); });
                 }

@@ -8,10 +8,4 @@ public class GetWalletAddress : MonoBehaviour
 {
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
-
-    void Awake()
-    {
-        Debug.Log(WalletAddress());
-        Debug.Log("Hello");
-    }
 }
