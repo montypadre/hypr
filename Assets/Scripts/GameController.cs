@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 // use web3.jslib
+using UnityEngine.Networking;
 using System.Runtime.InteropServices;
 
 
@@ -48,11 +49,8 @@ public class GameController : MonoBehaviour
 
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
-
-    void Awake()
-    {
-        Debug.Log("Player Wallet Address: " + WalletAddress());
-    }
+    string setURL = "https://74.207.237.136/PostAddress.php?name=address=";
+    string getURL = "https://74.207.237.136/ReadAddress.php";
 
     void Start()
     {
@@ -236,7 +234,9 @@ public class GameController : MonoBehaviour
                     highScorePanel.SetActive(true);
                     playerNameInput.Select();
                     // Store wallet address
-                    playerNameInput.onEndEdit.AddListener(delegate { });
+                    playerNameInput.onEndEdit.AddListener(delegate { SetAddress(); });
+                    // Get wallet address - FOR TESTING PURPOSES
+                    playerNameInput.onEndEdit.AddListener(delegate { GetAddress(); });
                     playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
                     playerNameInput.onEndEdit.AddListener(delegate { SceneManager.LoadScene("MainMenu"); });
                 }
@@ -251,6 +251,33 @@ public class GameController : MonoBehaviour
         {
             return;
         }
+    }
+
+    public void SetAddress()
+    {
+        StartCoroutine(SetWalletAddress(playerNameInput.text, WalletAddress()));
+    }
+
+    IEnumerator SetWalletAddress(string name, string address)
+    {
+        string URL = setURL + name + address;
+        UnityWebRequest www = new UnityWebRequest(URL);
+        yield return www.SendWebRequest();
+    }
+
+    // For testing purposes only
+    public void GetAddress()
+    {
+        StartCoroutine(GetWalletAddress());
+    }
+
+    IEnumerator GetWalletAddress()
+    {
+        string URL = getURL;
+        UnityWebRequest www = new UnityWebRequest(URL);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        yield return www; 
+        Debug.Log("Player wallet address: " + www.downloadHandler.text);
     }
 
     public void UpdateHealth(int health)
