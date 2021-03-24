@@ -49,7 +49,8 @@ public class GameController : MonoBehaviour
 
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
-    string setURL = "https://74.207.237.136/PostAddress.php?name=";
+    //string setURL = "https://74.207.237.136/PostAddress.php?name=";
+    string setURL = "https://74.207.237.136/PostAddress.php";
 
     void Start()
     {
@@ -257,8 +258,8 @@ public class GameController : MonoBehaviour
 
     IEnumerator SetWalletAddress(string name, string address)
     {
-        string URL = setURL + name + ": " + address;
-        UnityWebRequest www = new UnityWebRequest(URL);
+        //string URL = setURL + name + ": " + address;
+        UnityWebRequest www = new UnityWebRequest(setURL, name + ": " + address);
         yield return www.SendWebRequest();
     }
 
