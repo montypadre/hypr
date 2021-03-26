@@ -5,6 +5,7 @@ using UnityEngine;
 public class AsteroidController : MonoBehaviour
 {
     public int damage;
+    public GameObject sparks;
     public AudioClip impact;
     public float damageCooldown = 0.5f;
     public float currentTime;
@@ -30,7 +31,9 @@ public class AsteroidController : MonoBehaviour
 
                 if (playerHealth != null)
                 {
+                    GameObject sparksGo = Instantiate(sparks, other.transform.position, other.transform.rotation);
                     AudioSource.PlayClipAtPoint(impact, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
+                    Destroy(sparksGo, 0.1f);
                     playerHealth.DealDamage(damage);
                 }
             }

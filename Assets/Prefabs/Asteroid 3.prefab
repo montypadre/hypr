@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
+  sparks: {fileID: 1000011945391522, guid: 78b71003e8b357d4bbf89c8b5e5e4f0e, type: 3}
   impact: {fileID: 8300000, guid: 91f683ce0d552b24b9d825b2e340f0be, type: 3}
   damageCooldown: 0.2
   currentTime: 0
