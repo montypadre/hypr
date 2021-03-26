@@ -80,8 +80,8 @@ public class PlayerHealth : MonoBehaviour
         exploding = true;
         yield return new WaitForSeconds(0.1f);
         GameObject explosionGo = Instantiate(explosion, transform.position, Quaternion.Euler(0, 0, 0));
-        Destroy(gameObject, 0.5f);
-        Destroy(explosionGo, 1f);
+        Destroy(gameObject, 0.2f);
+        Destroy(explosionGo, 0.2f);
         yield return 0;
         AudioSource.PlayClipAtPoint(explosionClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
         yield return new WaitForSeconds(0.1f);
