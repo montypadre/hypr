@@ -128,7 +128,7 @@ public class GameController : MonoBehaviour
             targetPending = colliders.Length > 0;
         }
 
-        GameObject asteroidObject = Instantiate(asteroidObjects[UnityEngine.Random.Range(0, asteroidObjects.Length)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+        GameObject asteroidObject = Instantiate(asteroidObjects[UnityEngine.Random.Range(0, asteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
 
         asteroidObject.transform.LookAt(screenCenter);
         float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
