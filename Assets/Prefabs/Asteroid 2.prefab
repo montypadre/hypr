@@ -91,8 +91,6 @@ GameObject:
   - component: {fileID: 5306132787908423805}
   - component: {fileID: 6845491955497555865}
   - component: {fileID: 2005846331676405952}
-  - component: {fileID: -1781966556572495542}
-  - component: {fileID: -3231952841459946203}
   m_Layer: 0
   m_Name: Asteroid 2
   m_TagString: Enemy
@@ -158,45 +156,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tumble: 0.25
---- !u!114 &-1781966556572495542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5306132787903099113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73ef5a3fe9298c043805337ea7ad52a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 20
-  impact: {fileID: 8300000, guid: cc4e4e27757d7f04eb14099d151cdffe, type: 3}
-  damageCooldown: 0.2
-  currentTime: 0
---- !u!114 &-3231952841459946203
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5306132787903099113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e147fa3a269cfe944ba8d76363595fb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  explosion: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
-  explosionClip: {fileID: 8300000, guid: a205a058180f867448b8ee9434cbffa4, type: 3}
-  explosionVolume: 1
-  powerUps:
-  - {fileID: 9219741588669985561, guid: cf673cc99b0495549bc12c8067811326, type: 3}
-  - {fileID: 405737729430129674, guid: 5cf53ce88e0387b4cb59c57279905ace, type: 3}
-  percentDrop: 1
-  scoreValue: 100
-  gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
-    type: 3}
 --- !u!1 &5306132787903106145
 GameObject:
   m_ObjectHideFlags: 0

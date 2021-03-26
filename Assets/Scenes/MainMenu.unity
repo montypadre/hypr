@@ -2429,6 +2429,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e4ab3e6ee3631246973139c56210ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxRange: 20
+  minRange: 10
+  asteroid: {fileID: 5306132787903099113, guid: 24b36df9314c7b24db353ab350a49681,
+    type: 3}
+  maxScale: 10
+  minScale: 5
+  spawnInterval: 5
 --- !u!1 &1375956353
 GameObject:
   m_ObjectHideFlags: 0
