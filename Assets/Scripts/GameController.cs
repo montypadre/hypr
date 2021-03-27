@@ -231,6 +231,7 @@ public class GameController : MonoBehaviour
                 if (Int64.Parse(scoreValue.GetComponent<Text>().text) > entries[i].points)
                 {
                     highScorePanel.SetActive(true);
+                    Cursor.visible = true;
                     playerNameInput.Select();
                     // Store wallet address
                     playerNameInput.onEndEdit.AddListener(delegate { SetAddress(); });
@@ -241,6 +242,7 @@ public class GameController : MonoBehaviour
                 {
                     gamePanel.SetActive(false);
                     gameOverPanel.SetActive(true);
+                    Cursor.visible = true;
                 }
             }
         }

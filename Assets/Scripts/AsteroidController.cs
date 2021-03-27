@@ -31,8 +31,8 @@ public class AsteroidController : MonoBehaviour
 
                 if (playerHealth != null)
                 {
-                    GameObject sparksGo = Instantiate(sparks, other.transform.position, other.transform.rotation);
                     AudioSource.PlayClipAtPoint(impact, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
+                    GameObject sparksGo = Instantiate(sparks, other.transform.position, other.transform.rotation);
                     Destroy(sparksGo, 0.1f);
                     playerHealth.DealDamage(damage);
                 }

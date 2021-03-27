@@ -7,7 +7,7 @@ public class HighScorePanel : MonoBehaviour
 {
     void Start()
     {
-        
+ 
     }
 
     public void LoadMenu()
