@@ -8,6 +8,7 @@ public class HighScoreController : MonoBehaviour
     public Text[] names;
     public Text[] scores;
     [SerializeField] int boardID;
+
     // Start is called before the first frame update
     void Start() {
         LB_Controller.OnUpdatedScores += OnLeaderboardUpdated;

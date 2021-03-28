@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupEffect: {fileID: 100000, guid: bc0290eb454386141a1f4a4cf6a5c25b, type: 3}
-  healthPowerUpClip: {fileID: 8300000, guid: 9d3fcf62fbfc3ec44a2efe664c51c60e, type: 3}
+  healthPowerUpClip: {fileID: 8300000, guid: 07d25bc61ae0b6a45a41455776fc0a71, type: 3}
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}
 --- !u!114 &9219741587169919308
