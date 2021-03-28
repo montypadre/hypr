@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject player;
     public InputField playerNameInput;
+    public Button highScoreButton;
     public GameObject[] asteroidObjects;
 
 

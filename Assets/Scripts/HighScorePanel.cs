@@ -15,9 +15,4 @@ public class HighScorePanel : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
 }

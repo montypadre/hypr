@@ -30,10 +30,12 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GamePaused = false;
+        Cursor.visible = false;
     }
 
     void Pause()
     {
+        Cursor.visible = true;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GamePaused = true;
