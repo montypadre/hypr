@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
     public ShieldBar shieldBar;
     public GameObject highScorePanel;
     public GameObject gameOverPanel;
+    public GameObject blurPanel;
     private int playerShield;
     private int currentPlayerShield;
 
@@ -50,7 +51,7 @@ public class GameController : MonoBehaviour
 
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
-    string setURL = "https://74.207.237.136/PostAddress.php?name=";
+    string setURL = "https://ndmaddhouse.com/PostAddress.php?name=";
 
     void Start()
     {
@@ -229,7 +230,7 @@ public class GameController : MonoBehaviour
         {
         for (int i = 0; i < entries.Length; i++)
             {
-                if (Int64.Parse(scoreValue.GetComponent<Text>().text) > entries[i].points)
+                if (Int64.Parse(scoreValue.GetComponent<Text>().text) > entries[4].points)
                 {
                     highScorePanel.SetActive(true);
                     Cursor.visible = true;
@@ -239,9 +240,10 @@ public class GameController : MonoBehaviour
                     playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
                     playerNameInput.onEndEdit.AddListener(delegate { SceneManager.LoadScene("MainMenu"); });
                 }
-                else if (Int64.Parse(scoreValue.GetComponent<Text>().text) < entries[entries.Length - 1].points)
+                else if (Int64.Parse(scoreValue.GetComponent<Text>().text) < entries[4].points)
                 {
                     gamePanel.SetActive(false);
+                    blurPanel.SetActive(true);
                     gameOverPanel.SetActive(true);
                     Cursor.visible = true;
                 }
@@ -255,12 +257,12 @@ public class GameController : MonoBehaviour
 
     public void SetAddress()
     {
-        StartCoroutine(SetWalletAddress(playerNameInput.text, WalletAddress()));
+        StartCoroutine(SetWalletAddress(playerNameInput.text, Convert.ToInt32(scoreValue.GetComponent<Text>().text), WalletAddress()));
     }
 
-    IEnumerator SetWalletAddress(string name, string address)
+    IEnumerator SetWalletAddress(string name, int score, string address)
     {
-        string URL = setURL + name + ": " + address;
+        string URL = setURL + name + ": " + score + ": " + address;
         UnityWebRequest www = new UnityWebRequest(URL);
         yield return www.SendWebRequest();
     }

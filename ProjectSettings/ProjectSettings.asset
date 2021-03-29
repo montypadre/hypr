@@ -18,7 +18,7 @@ PlayerSettings:
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 1
+  m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
   m_SplashScreenLogoStyle: 1
@@ -40,9 +40,7 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
-    duration: 2
-  - logo: {fileID: 21300000, guid: 015a5e8a23775ed4d948c49c5ef44452, type: 3}
+  - logo: {fileID: 21300000, guid: 12b473cda15796f4bb24deec2046993d, type: 3}
     duration: 2
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
@@ -271,7 +269,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 015a5e8a23775ed4d948c49c5ef44452, type: 3}
+      m_Icon: {fileID: 2800000, guid: a08a93e75ef42f34ebc41e0db7ffb420, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -689,10 +687,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: a8158a35-b05d-42d2-8d6a-41f2d6ba5ff8
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
-  projectName: HYPR
-  organizationId: montypadre77
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
