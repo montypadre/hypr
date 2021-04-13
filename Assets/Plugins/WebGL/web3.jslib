@@ -13,9 +13,4 @@ mergeInto(LibraryManager.library, {
     stringToUTF8(returnStr, buffer, bufferSize);
     return buffer;
   },
-   GetBalance: function() {
-     var balance
-     balance = window.ethereum.getBalance
-     console.log(balance);
-   }
 });
