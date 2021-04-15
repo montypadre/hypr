@@ -1,22 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeStage.AntiCheat.ObscuredTypes;
+using CodeStage.AntiCheat.Detectors;
 
 public class HealthPowerUp : MonoBehaviour
 {
     public GameObject pickupEffect;
     public AudioClip healthPowerUpClip;
-    private int health;
+    private ObscuredInt health;
     private bool powerupActive;
+    private bool cheaterDetected = false;
     public GameController gameController;
 
     void Start()
     {
+        ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+    }
+
+    private void OnCheaterDetected()
+    {
+        cheaterDetected = true;
     }
 
     void Update()
     {
+        if (cheaterDetected)
+        {
+            Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
+            Application.Quit();
+        }
+
         if (!powerupActive)
         {
             StartCoroutine(PowerUp(10f));

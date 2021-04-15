@@ -1,4 +1,4 @@
-Obfuscator v3.7.3 Copyright (c) 2015-2021 Beebyte Limited. All Rights Reserved
+Obfuscator v3.8.0 Copyright (c) 2015-2021 Beebyte Limited. All Rights Reserved
 
 Please see the Obfuscator.pdf document for more detailed guidance.
 
@@ -137,6 +137,11 @@ See Obfuscator.pdf for more information.
 
 Update History
 ==============
+
+3.8.0 - 14th April 2021
+
+    * [ObfuscateLiterals] can now be applied at the class level for it to apply to the methods and fields within it
+    * Fixed a Unity 2017.3 compatibility issue
 
 3.7.3 - 30th March 2021
 

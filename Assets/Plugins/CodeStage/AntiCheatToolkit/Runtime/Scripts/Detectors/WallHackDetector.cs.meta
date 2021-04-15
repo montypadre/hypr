@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 7f5844f6ea3695941b97737851c4cfdf
+guid: d123a0bf35a94004aa342821cfcc3ea8
 MonoImporter:
-  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - thinWallPrefab: {fileID: 100000, guid: 3679c69bab7abbf408e8fcd6d63fd849, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

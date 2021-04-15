@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeStage.AntiCheat.ObscuredTypes;
+using CodeStage.AntiCheat.Detectors;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int health = 100;
-    private int currentHealth = 0;
-    public int currentShield = 100;
+    public ObscuredInt health = 100;
+    private ObscuredInt currentHealth = 0;
+    public ObscuredInt currentShield = 100;
+    private bool cheaterDetected = false;
 
     public GameObject explosion;
     private bool exploding = false;
@@ -18,13 +21,23 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
+        ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         currentHealth = health;
     }
 
+    private void OnCheaterDetected()
+    {
+        cheaterDetected = true;
+    }
+
     void Update()
     {
-        
+        if (cheaterDetected)
+        {
+            Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
+            Application.Quit();
+        }
     }
 
     public int GetHealth()

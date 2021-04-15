@@ -28,7 +28,14 @@ namespace Beebyte.Obfuscator.Assembly
 		{
 			HashSet<string> libDirectories = new HashSet<string>();
 			Stack<string> stack = new Stack<string>();
-			stack.Push(Path.Combine(EditorApplication.applicationContentsPath, "MonoBleedingEdge", "lib", "mono"));
+			var monoPath = EditorApplication.applicationContentsPath +
+			               Path.DirectorySeparatorChar.ToString() +
+			               "MonoBleedingEdge" +
+			               Path.DirectorySeparatorChar.ToString() +
+			               "lib" +
+			               Path.DirectorySeparatorChar.ToString() +
+			               "mono";
+			stack.Push(monoPath);
 
 			while (stack.Count > 0)
 			{

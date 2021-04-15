@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeStage.AntiCheat.Detectors;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,12 +12,19 @@ public class PlayerController : MonoBehaviour
     public float lazerVolume;
     public float cooldown = 1f;
     private float time = 0f;
+    private bool cheaterDetected = false;
     public GameController gameController;
 
     void Start()
     {
+        ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         GetComponent<Rigidbody>().freezeRotation = true;
+    }
+
+    private void OnCheaterDetected()
+    {
+        cheaterDetected = true;
     }
 
     void OnDestroy()
@@ -27,6 +35,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (cheaterDetected)
+        {
+            Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
+            Application.Quit();
+        }
+
         if (time > 0f)
         {
             time -= Time.deltaTime;

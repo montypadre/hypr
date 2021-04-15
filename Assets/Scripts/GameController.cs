@@ -4,9 +4,11 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-// use web3.jslib
 using UnityEngine.Networking;
 using System.Runtime.InteropServices;
+using CodeStage.AntiCheat.ObscuredTypes;
+using CodeStage.AntiCheat.Detectors;
+// use web3.jslib
 
 
 public class GameController : MonoBehaviour
@@ -15,6 +17,7 @@ public class GameController : MonoBehaviour
     public InputField playerNameInput;
     public Button highScoreButton;
     public GameObject[] asteroidObjects;
+    private bool cheaterDetected = false;
 
 
     public float maxRange = 10f;
@@ -43,8 +46,8 @@ public class GameController : MonoBehaviour
     public GameObject highScorePanel;
     public GameObject gameOverPanel;
     public GameObject blurPanel;
-    private int playerShield;
-    private int currentPlayerShield;
+    private ObscuredInt playerShield;
+    private ObscuredInt currentPlayerShield;
 
     bool isPlayerAlive = true;
     bool areShieldsUp = false;
@@ -55,6 +58,9 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
+        SpeedHackDetector.StartDetection(OnCheaterDetected);
+
         // Setting the active panel
         gameOverPanel.SetActive(false);
         highScorePanel.SetActive(false);
@@ -73,6 +79,11 @@ public class GameController : MonoBehaviour
         this.maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, -Camera.main.transform.position.z)).y;
         this.minX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -Camera.main.transform.position.z)).x;
         this.maxX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, -Camera.main.transform.position.z)).x;
+    }
+
+    private void OnCheaterDetected()
+    {
+        cheaterDetected = true;
     }
 
     public Vector3 GetNewPosition(Vector3 position)
@@ -140,6 +151,12 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+        if (cheaterDetected)
+        {
+            Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
+            Application.Quit();
+        }
+
         if (isPlayerAlive)
         {
             // As player score increases, decrease spawn interval for asteroids

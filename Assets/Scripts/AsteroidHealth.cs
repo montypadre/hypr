@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CodeStage.AntiCheat.ObscuredTypes;
+using CodeStage.AntiCheat.Detectors;
 
 public class AsteroidHealth : MonoBehaviour
 {
-    public int health = 100;
-    private int currentHealth = 0;
+    public ObscuredInt health = 100;
+    private ObscuredInt currentHealth = 0;
 
     public GameObject explosion;
     private bool exploding = false;
@@ -15,18 +17,29 @@ public class AsteroidHealth : MonoBehaviour
     public GameObject[] powerUps;
     public float percentDrop;
 
-    public int scoreValue = 0;
+    private bool cheaterDetected = false;
+    public ObscuredInt scoreValue = 0;
     public GameController gameController;
 
     void Start()
     {
+        ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         currentHealth = health;
     }
 
+    private void OnCheaterDetected()
+    {
+        cheaterDetected = true;
+    }
+
     void Update()
     {
-        
+        if (cheaterDetected)
+        {
+            Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
+            Application.Quit();
+        }
     }
 
     public void DealDamage(int damage)
