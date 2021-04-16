@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using CodeStage.AntiCheat.Detectors;
 
 public class PlayerController : MonoBehaviour
@@ -45,11 +46,14 @@ public class PlayerController : MonoBehaviour
         {
             time -= Time.deltaTime;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        else if (Keyboard.current.anyKey.wasPressedThisFrame)
         {
-            Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
-            AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
-            time = cooldown;
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+            {
+                Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
+                AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
+                time = cooldown;
+            }
         }
 
         if (Input.GetKey(KeyCode.W))
