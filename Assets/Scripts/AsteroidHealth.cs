@@ -16,6 +16,7 @@ public class AsteroidHealth : MonoBehaviour
 
     public GameObject[] powerUps;
     public float percentDrop;
+    PlayerHealth playerHealth;
 
     private bool cheaterDetected = false;
     public ObscuredInt scoreValue = 0;
@@ -25,6 +26,7 @@ public class AsteroidHealth : MonoBehaviour
     {
         ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealth>();
         currentHealth = health;
     }
 
@@ -72,6 +74,15 @@ public class AsteroidHealth : MonoBehaviour
         if (rand < percentDrop)
         {
             GameObject powerUp = Instantiate(powerUps[UnityEngine.Random.Range(0, powerUps.Length)], transform.position, transform.rotation);
+
+            // If player has full health, destroy health powerup
+            if (powerUp.name == "HealthPowerUp(Clone)")
+            {
+                if (playerHealth.GetHealth() == 100)
+                {
+                    Destroy(powerUp);
+                }
+            }
         }
     }
 }

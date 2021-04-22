@@ -10,8 +10,7 @@ public class AsteroidController : MonoBehaviour
     public ObscuredInt damage;
     public GameObject sparks;
     public AudioClip impact;
-    public float damageCooldown = 0.5f;
-    public float currentTime;
+    public float force;
     private bool cheaterDetected = false;
 
     void Start()
@@ -38,23 +37,20 @@ public class AsteroidController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (currentTime < damageCooldown)
-            {
-                currentTime += Time.deltaTime;
-            }
-            else
-            {
-                currentTime = 0f;
+            PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
-                PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+            // Bounce player off asteroid
+            Vector3 dir = other.contacts[0].point - player.transform.position;
+            dir = -dir.normalized;
+            player.GetComponent<Rigidbody>().AddForce(dir * force);
 
-                if (playerHealth != null)
-                {
-                    AudioSource.PlayClipAtPoint(impact, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
-                    GameObject sparksGo = Instantiate(sparks, other.transform.position, other.transform.rotation);
-                    Destroy(sparksGo, 0.1f);
-                    playerHealth.DealDamage(damage);
-                }
+            if (playerHealth != null)
+            {
+                AudioSource.PlayClipAtPoint(impact, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
+                GameObject sparksGo = Instantiate(sparks, other.transform.position, other.transform.rotation);
+                Destroy(sparksGo, 0.1f);
+                playerHealth.DealDamage(damage);
             }
         }
     }

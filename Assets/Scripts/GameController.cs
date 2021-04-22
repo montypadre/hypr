@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -50,6 +51,8 @@ public class GameController : MonoBehaviour
     private ObscuredInt currentPlayerShield;
 
     bool isPlayerAlive = true;
+    bool findPlayer = false;
+    public AudioClip impact;
     bool areShieldsUp = false;
 
     // use WalletAddress function from web3.jslib
@@ -180,7 +183,13 @@ public class GameController : MonoBehaviour
             if (!FindPlayer())
             {
                 playerExpire -= Time.deltaTime;
-                if (playerExpire <= 0)
+                Debug.Log(playerExpire);
+                if (playerExpire <= 15 && !findPlayer)
+                {
+                    InvokeRepeating("PlayImpact", 0.0f, 1.0f);
+                    InvokeRepeating("DepleteHealth", 0.0f, 1.0f);
+                }
+                else if (playerExpire <= 0)
                 {
                     PlayerDies();
                 }
@@ -214,6 +223,18 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+    }
+
+    void PlayImpact()
+    {
+        AudioSource.PlayClipAtPoint(impact, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 1f);
+        findPlayer = true;
+    }
+
+    void DepleteHealth()
+    {
+        player.GetComponent<PlayerHealth>().DealDamage(10);
+        findPlayer = true;
     }
 
     public static float RandomValueFromRanges(Range[] ranges)
@@ -253,6 +274,7 @@ public class GameController : MonoBehaviour
                     Cursor.visible = true;
                     playerNameInput.Select();
                     // Store wallet address
+                    playerNameInput.onEndEdit.AddListener(delegate { if (string.IsNullOrEmpty(playerNameInput.text)) { EditorUtility.DisplayDialog("Please Enter A Name", "You must enter your name to record your high score", "OK", "Cancel"); } });
                     playerNameInput.onEndEdit.AddListener(delegate { SetAddress(); });
                     playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
                     playerNameInput.onEndEdit.AddListener(delegate { SceneManager.LoadScene("MainMenu"); });
@@ -318,6 +340,8 @@ public class GameController : MonoBehaviour
 
     public void PlayerDies()
     {
+        CancelInvoke();
+        findPlayer = false;
         isPlayerAlive = false;
         time = 0.0f;
     }

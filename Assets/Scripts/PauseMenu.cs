@@ -8,11 +8,17 @@ public class PauseMenu : MonoBehaviour
     public static bool GamePaused = false;
 
     public GameObject pauseMenuUI;
+    public bool gameOver = false;
     public GameObject blurPanel;
+    public GameController gameController;
 
-    // Update is called once per frame
     void Update()
     {
+        if (gameController.gameOverPanel.activeSelf)
+        {
+            gameOver = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GamePaused)
@@ -37,11 +43,14 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        blurPanel.SetActive(true);
-        Cursor.visible = true;
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        GamePaused = true;
+        if (!gameOver)
+        {
+            blurPanel.SetActive(true);
+            Cursor.visible = true;
+            pauseMenuUI.SetActive(true);
+            Time.timeScale = 0f;
+            GamePaused = true;
+        }
     }
 
     public void LoadMenu()
@@ -49,4 +58,5 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
+
 }

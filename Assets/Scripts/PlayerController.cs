@@ -46,14 +46,11 @@ public class PlayerController : MonoBehaviour
         {
             time -= Time.deltaTime;
         }
-        else if (Keyboard.current.anyKey.wasPressedThisFrame)
+        else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-            {
-                Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
-                AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
-                time = cooldown;
-            }
+            Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
+            AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
+            time = cooldown;
         }
 
         if (Input.GetKey(KeyCode.W))

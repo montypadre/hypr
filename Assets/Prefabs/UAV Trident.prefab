@@ -130,7 +130,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 72
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!136 &1585707033882399736
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -191,8 +191,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f83d4bdcbd3a941afa66548428e7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  currentShield: 100
+  health:
+    currentCryptoKey: 1873290153
+    hiddenValue: 1873290189
+    inited: 1
+    fakeValue: 100
+    fakeValueActive: 1
+  currentShield:
+    currentCryptoKey: 1166137698
+    hiddenValue: 1166137606
+    inited: 1
+    fakeValue: 100
+    fakeValueActive: 1
   explosion: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
   explosionClip: {fileID: 8300000, guid: 6bbe7280a2adc3646a6f096ba4986db6, type: 3}
   explosionVolume: 1
