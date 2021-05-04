@@ -5,8 +5,10 @@ using CodeStage.AntiCheat.ObscuredTypes;
 using CodeStage.AntiCheat.Detectors;
 
 
-public class AsteroidController : MonoBehaviour
+public class ExplodingAsteroidController : MonoBehaviour
 {
+    public GameObject explosion;
+    public AudioClip explosionClip;
     public ObscuredInt damage;
     public GameObject sparks;
     public AudioClip impact;
@@ -20,6 +22,7 @@ public class AsteroidController : MonoBehaviour
         ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         GetComponent<Rigidbody>().AddForce(transform.forward * 700f);
+        StartCoroutine(Explode(5f));
     }
 
     private void OnCheaterDetected()
@@ -90,5 +93,15 @@ public class AsteroidController : MonoBehaviour
     void OnBecameInvisible()
     {
         Destroy(gameObject);
+    }
+
+    IEnumerator Explode(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        GameObject explosionGo = Instantiate(explosion, transform.position, Quaternion.Euler(0, 0, 0));
+        Destroy(gameObject, 0.5f);
+        Destroy(explosionGo, 1f);
+        yield return 0;
+        AudioSource.PlayClipAtPoint(explosionClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
     }
 }

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8339288793693671218}
   - component: {fileID: 8858095381775851398}
   - component: {fileID: -783299760690168197}
-  - component: {fileID: 3302352243555038109}
+  - component: {fileID: -7238806687290203244}
   m_Layer: 0
-  m_Name: SlowMo Powerup
+  m_Name: AlloyPowerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.12, y: 5.12, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3302352243555038109
+--- !u!114 &-7238806687290203244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,12 +105,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7128478523202534598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d632c7ae4a385c740a203ecdf9508693, type: 3}
+  m_Script: {fileID: 11500000, guid: b625118a6be6e364bb70c1480c850097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupEffect: {fileID: 100000, guid: 234dc7ebff095244b948288a5886c5da, type: 3}
-  slowmoPowerUpClip: {fileID: 8300000, guid: 07d25bc61ae0b6a45a41455776fc0a71, type: 3}
-  timeManager: {fileID: 2051732968133114761, guid: 534c7980a2fbee94b85c01d9a255818f,
-    type: 3}
+  fuel: 100
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}
+  alloyPowerUpClip: {fileID: 8300000, guid: 0f1189e65f82a344d8134ec9cba8680b, type: 3}

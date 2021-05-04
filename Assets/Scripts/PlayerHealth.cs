@@ -17,11 +17,13 @@ public class PlayerHealth : MonoBehaviour
     public float explosionVolume;
 
     public int scoreValue = 0;
+    PlayerController playerController;
     public GameController gameController;
 
     void Start()
     {
         ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
+        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         currentHealth = health;
     }
@@ -37,6 +39,11 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
             Application.Quit();
+        }
+
+        if (playerController.GetFuel() <= 0)
+        {
+            StartCoroutine(Explode());
         }
     }
 
@@ -77,7 +84,7 @@ public class PlayerHealth : MonoBehaviour
             //    AudioSource.PlayClipAtPoint(alarm, 0.9f * Camera.main.transform.position + 0.1f * transform.position, alarmVolume);
             //}
         }
-
+        
         if (currentHealth <= 0 && !exploding)
         {
             StartCoroutine(Explode());

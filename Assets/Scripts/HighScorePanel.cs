@@ -12,6 +12,14 @@ public class HighScorePanel : MonoBehaviour
 
     public void LoadMenu()
     {
+        if (GameObject.Find("AlloyPowerup") != null)
+        {
+            GameObject[] alloyPowerups = GameObject.FindGameObjectsWithTag("AlloyPowerup");
+            foreach (GameObject alloyPowerup in alloyPowerups)
+            {
+                Destroy(alloyPowerup);
+            }
+        }
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }

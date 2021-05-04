@@ -5,12 +5,13 @@ using CodeStage.AntiCheat.ObscuredTypes;
 using CodeStage.AntiCheat.Detectors;
 
 
-public class AsteroidController : MonoBehaviour
+public class HyperAsteroidController : MonoBehaviour
 {
     public ObscuredInt damage;
     public GameObject sparks;
     public AudioClip impact;
     public GameObject alloyPowerUp;
+    const float G = 667.4f;
     public float force;
     private bool cheaterDetected = false;
     public GameController gameController;
@@ -65,6 +66,14 @@ public class AsteroidController : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (gameController.isPlayerAlive)
+        {
+            Attract(gameController.player);
+        }
+    }
+
     private void OnCollisionStay(Collision other)
     {
         if (other.gameObject.tag == "Player")
@@ -85,6 +94,19 @@ public class AsteroidController : MonoBehaviour
                 playerHealth.DealDamage(damage);
             }
         }
+    }
+
+    void Attract(GameObject objToAttract)
+    {
+        Rigidbody rbToAttract = objToAttract.GetComponent<Rigidbody>();
+
+        Vector3 direction = GetComponent<Rigidbody>().position - rbToAttract.position;
+        float distance = direction.magnitude;
+
+        float forceMagnitude = G * (GetComponent<Rigidbody>().mass * rbToAttract.mass) / Mathf.Pow(distance, 2);
+        Vector3 force = direction.normalized * forceMagnitude;
+
+        rbToAttract.AddForce(force);
     }
 
     void OnBecameInvisible()

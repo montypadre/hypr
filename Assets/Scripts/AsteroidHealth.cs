@@ -15,6 +15,9 @@ public class AsteroidHealth : MonoBehaviour
     public float explosionVolume;
 
     public GameObject[] powerUps;
+    public GameObject autoRapidFirePowerUp;
+    public GameObject spreadFirePowerUp;
+    public GameObject hyperBlossomFirePowerUp;
     public float percentDrop;
     PlayerHealth playerHealth;
 
@@ -58,7 +61,7 @@ public class AsteroidHealth : MonoBehaviour
         }
     }
 
-    IEnumerator Explode()
+    public IEnumerator Explode()
     {
         float rand = UnityEngine.Random.Range(0f, 100f);
         exploding = true;
@@ -70,6 +73,21 @@ public class AsteroidHealth : MonoBehaviour
         AudioSource.PlayClipAtPoint(explosionClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
         yield return new WaitForSeconds(0.01f);
         exploding = false;
+        
+        if (rand < 2f)
+        {
+            GameObject autoRapidFire = Instantiate(autoRapidFirePowerUp, transform.position, transform.rotation);
+        }
+
+        if (rand < 1f)
+        {
+            GameObject spreadFire = Instantiate(spreadFirePowerUp, transform.position, transform.rotation);
+        }
+
+        if (rand < 0.5f)
+        {
+            GameObject hyperBlossomFire = Instantiate(hyperBlossomFirePowerUp, transform.position, transform.rotation);
+        }
 
         if (rand < percentDrop)
         {

@@ -16,8 +16,18 @@ public class GameController : MonoBehaviour
 {
     public GameObject player;
     public InputField playerNameInput;
-    public Button highScoreButton;
-    public GameObject[] asteroidObjects;
+    private Animation wave1Anim;
+    private Animation wave2Anim;
+    private Animation wave3Anim;
+    private Animation wave4Anim;
+    public Text wave1;
+    public Text wave2;
+    public Text wave3;
+    public Text wave4;
+    private bool animPlayed;
+    public GameObject[] standardAsteroidObjects;
+    public GameObject[] hyperAsteroidObjects;
+    public GameObject[] explodingAsteroidObjects;
     private bool cheaterDetected = false;
 
 
@@ -44,16 +54,19 @@ public class GameController : MonoBehaviour
     public GameObject gamePanel;
     public HealthBar healthBar;
     public ShieldBar shieldBar;
+    public HyperFuelBar hyperFuelBar;
     public GameObject highScorePanel;
     public GameObject gameOverPanel;
     public GameObject blurPanel;
     private ObscuredInt playerShield;
     private ObscuredInt currentPlayerShield;
 
-    bool isPlayerAlive = true;
+    public bool isPlayerAlive = true;
     bool findPlayer = false;
     public AudioClip impact;
     bool areShieldsUp = false;
+
+    float playedTime;
 
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
@@ -71,6 +84,7 @@ public class GameController : MonoBehaviour
         gamePanel.SetActive(true);
 
         healthBar.SetMaxHealth(100);
+        hyperFuelBar.SetMaxFuel(100);
 
         // Instantiating player
         player = Instantiate(player, new Vector3(0, 0, 0), Quaternion.Euler(-90, 0, 0));
@@ -82,6 +96,12 @@ public class GameController : MonoBehaviour
         this.maxY = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, -Camera.main.transform.position.z)).y;
         this.minX = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, -Camera.main.transform.position.z)).x;
         this.maxX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, -Camera.main.transform.position.z)).x;
+
+        wave1Anim = wave1.GetComponent<Animation>();
+        wave2Anim = wave2.GetComponent<Animation>();
+        wave3Anim = wave3.GetComponent<Animation>();
+        wave4Anim = wave4.GetComponent<Animation>();
+        animPlayed = false;
     }
 
     private void OnCheaterDetected()
@@ -143,13 +163,86 @@ public class GameController : MonoBehaviour
 
             targetPending = colliders.Length > 0;
         }
+        // Level 1
+        if (playedTime <= 300)
+        {
+            if (!animPlayed)
+            {
+                wave1Anim.Play("fade-in-out");
+                animPlayed = true;
+            }
+            
+            GameObject asteroidObject = Instantiate(standardAsteroidObjects[UnityEngine.Random.Range(0, standardAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
 
-        GameObject asteroidObject = Instantiate(asteroidObjects[UnityEngine.Random.Range(0, asteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+            asteroidObject.transform.LookAt(screenCenter);
+            float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
 
-        asteroidObject.transform.LookAt(screenCenter);
-        float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
+            asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
+        }
+        // Level 2
+        else if (playedTime > 300 && playedTime <= 600)
+        {
+            animPlayed = false;
+            StartCoroutine(ClearAsteroids());
+            if (!animPlayed)
+            {
+                wave2Anim.Play("fade-in-out");
+                animPlayed = true;
+            }
 
-        asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
+            GameObject asteroidObject = Instantiate(hyperAsteroidObjects[UnityEngine.Random.Range(0, hyperAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+
+            asteroidObject.transform.LookAt(screenCenter);
+            float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
+
+            asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
+        }
+        // Level 3 
+        else if (playedTime > 600 && playedTime <= 900)
+        {
+            animPlayed = false;
+            StartCoroutine(ClearAsteroids());
+            if (!animPlayed)
+            {
+                wave3Anim.Play("fade-in-out");
+                animPlayed = true;
+            }
+
+            GameObject asteroidObject = Instantiate(explodingAsteroidObjects[UnityEngine.Random.Range(0, explodingAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+            asteroidObject.transform.LookAt(screenCenter);
+            float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
+
+            asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
+
+        }
+        // Level 4
+        else
+        {
+            animPlayed = false;
+            StartCoroutine(ClearAsteroids());
+            if (!animPlayed)
+            {
+                wave4Anim.Play("fade-in-out");
+                animPlayed = true;
+            }
+
+            GameObject asteroidObject1 = Instantiate(hyperAsteroidObjects[UnityEngine.Random.Range(0, hyperAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+            GameObject asteroidObject2 = Instantiate(explodingAsteroidObjects[UnityEngine.Random.Range(0, explodingAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+            asteroidObject1.transform.LookAt(screenCenter);
+            asteroidObject2.transform.LookAt(screenCenter);
+            float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
+
+            asteroidObject1.transform.localScale = new Vector3(scale, scale, scale);
+            asteroidObject2.transform.localScale = new Vector3(scale, scale, scale);
+
+        }
+    }
+
+    IEnumerator ClearAsteroids()
+    {
+        spawnInterval = 3f;
+        yield return new WaitForSeconds(3f);
+        spawnInterval = spawnInterval;
     }
 
     void Update()
@@ -159,6 +252,8 @@ public class GameController : MonoBehaviour
             Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
             Application.Quit();
         }
+
+        playedTime += Time.unscaledDeltaTime;
 
         if (isPlayerAlive)
         {
@@ -183,7 +278,6 @@ public class GameController : MonoBehaviour
             if (!FindPlayer())
             {
                 playerExpire -= Time.deltaTime;
-                Debug.Log(playerExpire);
                 if (playerExpire <= 15 && !findPlayer)
                 {
                     InvokeRepeating("PlayImpact", 0.0f, 1.0f);
@@ -224,13 +318,13 @@ public class GameController : MonoBehaviour
             }
         }
     }
-
+    // Play impact sound when player has been offscreen for more than 30 seconds
     void PlayImpact()
     {
         AudioSource.PlayClipAtPoint(impact, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 1f);
         findPlayer = true;
     }
-
+    // Deplete player health when player has been offscreen for more than 30 seconds
     void DepleteHealth()
     {
         player.GetComponent<PlayerHealth>().DealDamage(10);
@@ -336,6 +430,12 @@ public class GameController : MonoBehaviour
     public void UpdateShield(int shield)
     {
         shieldBar.SetShield(shield);
+    }
+
+    public void UpdateFuel(float fuel)
+    {
+        hyperFuelBar.SetFuel(fuel);
+        player.GetComponent<PlayerController>().currentFuel = fuel;
     }
 
     public void PlayerDies()

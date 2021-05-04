@@ -171,12 +171,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32624fe0786568741a1e1db4061b3dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fuel: 100
+  currentFuel: 0
   rotationSpeed: 225
   movementSpeed: 700
   lazer: {fileID: 1297853052993878302, guid: c62b62f6be203a04b92c13034a03a803, type: 3}
   lazerFire: {fileID: 8300000, guid: 83ebd7bb3454bb443892f74131ede1a7, type: 3}
   lazerVolume: 0.7
-  cooldown: 0.0001
+  cooldown: 0.1
   gameController: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
     type: 3}
 --- !u!114 &1814383527452129625
