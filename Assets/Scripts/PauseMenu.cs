@@ -43,7 +43,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        if (!gameOver)
+        if (!gameOver && !gameController.wave1.gameObject.activeSelf)
         {
             blurPanel.SetActive(true);
             Cursor.visible = true;
@@ -55,14 +55,6 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-        if (GameObject.Find("AlloyPowerup") != null)
-        {
-            GameObject[] alloyPowerups = GameObject.FindGameObjectsWithTag("AlloyPowerup");
-            foreach (GameObject alloyPowerup in alloyPowerups)
-            {
-                Destroy(alloyPowerup);
-            }
-        }
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }

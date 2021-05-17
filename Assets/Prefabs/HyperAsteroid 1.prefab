@@ -426,6 +426,8 @@ MonoBehaviour:
   powerUps:
   - {fileID: 9219741588669985561, guid: cf673cc99b0495549bc12c8067811326, type: 3}
   - {fileID: 405737729430129674, guid: 5cf53ce88e0387b4cb59c57279905ace, type: 3}
+  alloyPowerUp: {fileID: 7128478523202534598, guid: fd666ccff81e61544987d08f1c6e86c9,
+    type: 3}
   autoRapidFirePowerUp: {fileID: 4419044983414861018, guid: 1227787a4bac543409e09e2101769b70,
     type: 3}
   spreadFirePowerUp: {fileID: 4349189912599688899, guid: a23bb85933e07f240abf400c4068800f,

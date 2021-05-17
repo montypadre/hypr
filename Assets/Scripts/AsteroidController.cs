@@ -10,7 +10,6 @@ public class AsteroidController : MonoBehaviour
     public ObscuredInt damage;
     public GameObject sparks;
     public AudioClip impact;
-    public GameObject alloyPowerUp;
     public float force;
     private bool cheaterDetected = false;
     public GameController gameController;
@@ -25,35 +24,6 @@ public class AsteroidController : MonoBehaviour
     private void OnCheaterDetected()
     {
         cheaterDetected = true;
-    }
-
-    // Drop HyperFuel powerup whenever an asteroid is destroyed
-    void OnDestroy()
-    {
-        if (gameController.isPlayerAlive == true)
-        {
-            GameObject alloy = Instantiate(alloyPowerUp, transform.position, transform.rotation);
-
-            if (GameObject.Find("AlloyPowerup") != null)
-            {
-                GameObject[] alloyPowerups = GameObject.FindGameObjectsWithTag("AlloyPowerup");
-                foreach (GameObject alloyPowerup in alloyPowerups)
-                {
-                    Destroy(alloyPowerup);
-                }
-            }
-        }
-        else
-        {
-            if (GameObject.Find("AlloyPowerup") != null)
-            {
-                GameObject[] alloyPowerups = GameObject.FindGameObjectsWithTag("AlloyPowerup");
-                foreach (GameObject alloyPowerup in alloyPowerups)
-                {
-                    Destroy(alloyPowerup);
-                }
-            }
-        }
     }
 
     void Update()

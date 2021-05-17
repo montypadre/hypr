@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,6 +10,10 @@ using System.Runtime.InteropServices;
 using CodeStage.AntiCheat.ObscuredTypes;
 using CodeStage.AntiCheat.Detectors;
 // use web3.jslib
+// using Nethereum RPC
+using Nethereum.JsonRpc.UnityClient;
+// using contract definition
+using LeaderboardContract.Contracts.Leaderboard.ContractDefinition;
 
 
 public class GameController : MonoBehaviour
@@ -65,12 +69,15 @@ public class GameController : MonoBehaviour
     bool findPlayer = false;
     public AudioClip impact;
     bool areShieldsUp = false;
+    private bool canSpawn = true;
 
-    float playedTime;
+    public float playedTime;
 
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
-    string setURL = "https://ndmaddhouse.com/PostAddress.php?name=";
+    //string setURL = "https://ndmaddhouse.com/PostAddress.php?name=";
+    string url;
+    string contractAddress;
 
     void Start()
     {
@@ -102,6 +109,10 @@ public class GameController : MonoBehaviour
         wave3Anim = wave3.GetComponent<Animation>();
         wave4Anim = wave4.GetComponent<Animation>();
         animPlayed = false;
+
+        // Set contract URL and address
+        url = "https://data-seed-prebsc-1-s2.binance.org:8545/";
+        contractAddress = "0x8c8559286612050B75a232e1ccDA5bEC8d771a5b";
     }
 
     private void OnCheaterDetected()
@@ -164,13 +175,15 @@ public class GameController : MonoBehaviour
             targetPending = colliders.Length > 0;
         }
         // Level 1
-        if (playedTime <= 300)
+        if (playedTime <= 150)
         {
-            if (!animPlayed)
+            while (!animPlayed)
             {
+                wave1.gameObject.SetActive(true);
                 wave1Anim.Play("fade-in-out");
                 animPlayed = true;
             }
+
             
             GameObject asteroidObject = Instantiate(standardAsteroidObjects[UnityEngine.Random.Range(0, standardAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
 
@@ -180,15 +193,16 @@ public class GameController : MonoBehaviour
             asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
         }
         // Level 2
-        else if (playedTime > 300 && playedTime <= 600)
+        else if (playedTime > 150 && playedTime <= 300)
         {
-            animPlayed = false;
-            StartCoroutine(ClearAsteroids());
-            if (!animPlayed)
+            while (animPlayed)
             {
+                wave1.gameObject.SetActive(false);
+                wave2.gameObject.SetActive(true);
                 wave2Anim.Play("fade-in-out");
-                animPlayed = true;
+                animPlayed = false;
             }
+            StartCoroutine(ClearAsteroids());
 
             GameObject asteroidObject = Instantiate(hyperAsteroidObjects[UnityEngine.Random.Range(0, hyperAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
 
@@ -198,15 +212,16 @@ public class GameController : MonoBehaviour
             asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
         }
         // Level 3 
-        else if (playedTime > 600 && playedTime <= 900)
+        else if (playedTime > 300 && playedTime <= 450)
         {
-            animPlayed = false;
-            StartCoroutine(ClearAsteroids());
-            if (!animPlayed)
+            while (!animPlayed)
             {
+                wave2.gameObject.SetActive(false);
+                wave3.gameObject.SetActive(true);
                 wave3Anim.Play("fade-in-out");
                 animPlayed = true;
             }
+            StartCoroutine(ClearAsteroids());
 
             GameObject asteroidObject = Instantiate(explodingAsteroidObjects[UnityEngine.Random.Range(0, explodingAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
             asteroidObject.transform.LookAt(screenCenter);
@@ -218,13 +233,14 @@ public class GameController : MonoBehaviour
         // Level 4
         else
         {
-            animPlayed = false;
-            StartCoroutine(ClearAsteroids());
-            if (!animPlayed)
+            while (animPlayed)
             {
+                wave3.gameObject.SetActive(false);
+                wave4.gameObject.SetActive(true);
                 wave4Anim.Play("fade-in-out");
-                animPlayed = true;
+                animPlayed = false;
             }
+            StartCoroutine(ClearAsteroids());
 
             GameObject asteroidObject1 = Instantiate(hyperAsteroidObjects[UnityEngine.Random.Range(0, hyperAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
             GameObject asteroidObject2 = Instantiate(explodingAsteroidObjects[UnityEngine.Random.Range(0, explodingAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
@@ -240,13 +256,14 @@ public class GameController : MonoBehaviour
 
     IEnumerator ClearAsteroids()
     {
-        spawnInterval = 3f;
+        canSpawn = false;
         yield return new WaitForSeconds(3f);
-        spawnInterval = spawnInterval;
+        canSpawn = true;
     }
 
     void Update()
     {
+        Debug.Log(playedTime);
         if (cheaterDetected)
         {
             Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
@@ -296,7 +313,7 @@ public class GameController : MonoBehaviour
 
             time += Time.deltaTime;
 
-            if (time >= spawnInterval)
+            if (time >= spawnInterval && canSpawn)
             {
                 time = time - spawnInterval;
 
@@ -318,6 +335,7 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
     // Play impact sound when player has been offscreen for more than 30 seconds
     void PlayImpact()
     {
@@ -355,50 +373,69 @@ public class GameController : MonoBehaviour
         scoreValue.GetComponent<Text>().text = (Int64.Parse(scoreValue.GetComponent<Text>().text) + score).ToString();
     }
 
-    public void StoreScore()
+    private IEnumerator CheckHighScore()
     {
-        LB_Entry[] entries = LB_Controller.instance.Entries();
+        int leaderboardIndex = 4;
+        var queryRequest = new QueryUnityRequest<LeaderboardFunction, LeaderboardOutputDTOBase>(url, contractAddress);
+        yield return queryRequest.Query(new LeaderboardFunction() { ReturnValue1 = leaderboardIndex }, contractAddress);
+
         if (scoreValue != null)
         {
-        for (int i = 0; i < entries.Length; i++)
+            if (Int64.Parse(scoreValue.GetComponent<Text>().text) > queryRequest.Result.Score)
             {
-                if (Int64.Parse(scoreValue.GetComponent<Text>().text) > entries[4].points)
-                {
-                    highScorePanel.SetActive(true);
-                    Cursor.visible = true;
-                    playerNameInput.Select();
-                    // Store wallet address
-                    playerNameInput.onEndEdit.AddListener(delegate { if (string.IsNullOrEmpty(playerNameInput.text)) { EditorUtility.DisplayDialog("Please Enter A Name", "You must enter your name to record your high score", "OK", "Cancel"); } });
-                    playerNameInput.onEndEdit.AddListener(delegate { SetAddress(); });
-                    playerNameInput.onEndEdit.AddListener(delegate { LB_Controller.instance.StoreScore(Convert.ToInt32(scoreValue.GetComponent<Text>().text), playerNameInput.text, 31); });
-                    playerNameInput.onEndEdit.AddListener(delegate { SceneManager.LoadScene("MainMenu"); });
-                }
-                else if (Int64.Parse(scoreValue.GetComponent<Text>().text) < entries[4].points)
-                {
-                    gamePanel.SetActive(false);
-                    blurPanel.SetActive(true);
-                    gameOverPanel.SetActive(true);
-                    Cursor.visible = true;
-                }
+                highScorePanel.SetActive(true);
+                Cursor.visible = true;
+                playerNameInput.Select();
+                playerNameInput.onEndEdit.AddListener(delegate { StartCoroutine(SignAndSendTransaction()); });
+            }
+            else if (Int64.Parse(scoreValue.GetComponent<Text>().text) < queryRequest.Result.Score)
+            {
+                gamePanel.SetActive(false);
+                blurPanel.SetActive(true);
+                gameOverPanel.SetActive(true);
+                Cursor.visible = true;
             }
         }
-        else 
+    }
+
+    // TODO: Obfusacte private key
+    // Going to store private key
+    // on server and make a web request to retrieve it when needed
+    private IEnumerator SignAndSendTransaction()
+    {
+        yield return new WaitForSeconds(4);
+        var addScoreRequest = new TransactionSignedUnityRequest(url, "2a135a7c4a0309f4e77a197d863803f2127ba31119d14fe5e91ae6f24e0ef2bf", 97);
+        Debug.Log(playerNameInput.text);
+        if (playerNameInput.text != null)
         {
-            return;
+            yield return addScoreRequest.SignAndSendTransaction(new AddScoreFunction() { User = playerNameInput.text, Score = Convert.ToInt32(scoreValue.GetComponent<Text>().text) }, contractAddress);
         }
+        else
+        {
+            yield return addScoreRequest.SignAndSendTransaction(new AddScoreFunction() { User = "xxx", Score = Convert.ToInt32(scoreValue.GetComponent<Text>().text) }, contractAddress);
+        }
+        if (addScoreRequest.Exception == null)
+        {
+            Debug.Log("High score submitted tx: " + addScoreRequest.Result);
+        }
+        else
+        {
+            Debug.Log("Error submitted tx: " + addScoreRequest.Exception.Message);
+        }
+        SceneManager.LoadScene("MainMenu");
     }
 
-    public void SetAddress()
-    {
-        StartCoroutine(SetWalletAddress(playerNameInput.text, Convert.ToInt32(scoreValue.GetComponent<Text>().text), WalletAddress()));
-    }
+    //public void SetAddress()
+    //{
+    //    StartCoroutine(SetWalletAddress(playerNameInput.text, Convert.ToInt32(scoreValue.GetComponent<Text>().text), WalletAddress()));
+    //}
 
-    IEnumerator SetWalletAddress(string name, int score, string address)
-    {
-        string URL = setURL + name + ": " + score + ": " + address;
-        UnityWebRequest www = new UnityWebRequest(URL);
-        yield return www.SendWebRequest();
-    }
+    //IEnumerator SetWalletAddress(string name, int score, string address)
+    //{
+    //    string URL = setURL + name + ": " + score + ": " + address;
+    //    UnityWebRequest www = new UnityWebRequest(URL);
+    //    yield return www.SendWebRequest();
+    //}
 
     public void UpdateHealth(int health)
     {
@@ -441,6 +478,7 @@ public class GameController : MonoBehaviour
     public void PlayerDies()
     {
         CancelInvoke();
+        StartCoroutine(CheckHighScore());
         findPlayer = false;
         isPlayerAlive = false;
         time = 0.0f;

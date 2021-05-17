@@ -15,6 +15,7 @@ public class AsteroidHealth : MonoBehaviour
     public float explosionVolume;
 
     public GameObject[] powerUps;
+    public GameObject alloyPowerUp;
     public GameObject autoRapidFirePowerUp;
     public GameObject spreadFirePowerUp;
     public GameObject hyperBlossomFirePowerUp;
@@ -45,6 +46,11 @@ public class AsteroidHealth : MonoBehaviour
             Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
             Application.Quit();
         }
+
+        if (this.gameObject == null)
+        {
+            Instantiate(alloyPowerUp, transform.position, transform.rotation);
+        }
     }
 
     public void DealDamage(int damage)
@@ -69,11 +75,11 @@ public class AsteroidHealth : MonoBehaviour
         GameObject explosionGo = Instantiate(explosion, transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(gameObject, 0.5f);
         Destroy(explosionGo, 1f);
+        Instantiate(alloyPowerUp, transform.position, transform.rotation);
         yield return 0;
         AudioSource.PlayClipAtPoint(explosionClip, 0.9f * Camera.main.transform.position + 0.1f * transform.position, 10f);
         yield return new WaitForSeconds(0.01f);
-        exploding = false;
-        
+
         if (rand < 2f)
         {
             GameObject autoRapidFire = Instantiate(autoRapidFirePowerUp, transform.position, transform.rotation);

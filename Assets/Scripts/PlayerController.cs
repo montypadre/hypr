@@ -37,8 +37,10 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
-        gameController.StoreScore();
-        gameController.PlayerDies();
+        if (gameController != null)
+        {
+            gameController.PlayerDies();
+        }
     }
 
     void Update()
@@ -53,20 +55,20 @@ public class PlayerController : MonoBehaviour
         {
             time -= Time.deltaTime;
         }
-        else if (Input.GetKeyDown(KeyCode.Return) && rapidFireActive == false && spreadFireActive == false && hyperBlossomFireActive == false)
+        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) && rapidFireActive == false && spreadFireActive == false && hyperBlossomFireActive == false)
         {
             UseFuel();
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
             AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
             time = cooldown;
         }
-        else if (Input.GetKey(KeyCode.Return) && rapidFireActive == true)
+        else if (rapidFireActive == true && Input.GetKey(KeyCode.Return) || rapidFireActive == true && Input.GetKey(KeyCode.Space))
         {
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
             AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
             time = cooldown;
         }
-        else if (Input.GetKeyDown(KeyCode.Return) && spreadFireActive == true)
+        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) && spreadFireActive == true)
         {
             AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
 
@@ -142,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
     void UseFuel()
     {
-        currentFuel -= 0.1f;
+        currentFuel -= 0.05f;
         gameController.UpdateFuel(currentFuel);
     }
 
