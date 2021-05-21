@@ -55,6 +55,7 @@ public class AsteroidHealth : MonoBehaviour
 
     public void DealDamage(int damage)
     {
+        Debug.Log(damage);
         currentHealth -= damage;
 
         if (currentHealth <= 0 && !exploding)
@@ -90,7 +91,7 @@ public class AsteroidHealth : MonoBehaviour
             GameObject spreadFire = Instantiate(spreadFirePowerUp, transform.position, transform.rotation);
         }
 
-        if (rand < 0.5f)
+        if (rand < 100f)
         {
             GameObject hyperBlossomFire = Instantiate(hyperBlossomFirePowerUp, transform.position, transform.rotation);
         }

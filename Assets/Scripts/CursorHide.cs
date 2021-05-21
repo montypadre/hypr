@@ -13,6 +13,9 @@ public class CursorHide : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Cursor.visible = true;
+        }
     }
 }

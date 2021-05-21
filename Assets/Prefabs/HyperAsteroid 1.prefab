@@ -416,9 +416,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health:
     currentCryptoKey: 1423738323
-    hiddenValue: 1423738322
+    hiddenValue: 1423738295
     inited: 1
-    fakeValue: 1
+    fakeValue: 100
     fakeValueActive: 1
   explosion: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
   explosionClip: {fileID: 8300000, guid: df44a13d5f8bfef4dae87d97c2ccd814, type: 3}

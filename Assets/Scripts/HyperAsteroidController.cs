@@ -11,7 +11,7 @@ public class HyperAsteroidController : MonoBehaviour
     public GameObject sparks;
     public AudioClip impact;
     public GameObject alloyPowerUp;
-    const float G = 667.4f;
+    const float G = 166.85f;
     public float force;
     private bool cheaterDetected = false;
     public GameController gameController;

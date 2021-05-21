@@ -184,7 +184,6 @@ public class GameController : MonoBehaviour
                 animPlayed = true;
             }
 
-            
             GameObject asteroidObject = Instantiate(standardAsteroidObjects[UnityEngine.Random.Range(0, standardAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
 
             asteroidObject.transform.LookAt(screenCenter);
@@ -204,12 +203,15 @@ public class GameController : MonoBehaviour
             }
             StartCoroutine(ClearAsteroids());
 
-            GameObject asteroidObject = Instantiate(hyperAsteroidObjects[UnityEngine.Random.Range(0, hyperAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+            GameObject asteroidObject = Instantiate(standardAsteroidObjects[UnityEngine.Random.Range(0, standardAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
+            GameObject hyperAsteroidObject = Instantiate(hyperAsteroidObjects[UnityEngine.Random.Range(1, hyperAsteroidObjects.Length - 1)], new Vector3(spawnX, spawnY, 0), Quaternion.Euler(0, 0, 0));
 
             asteroidObject.transform.LookAt(screenCenter);
+            hyperAsteroidObject.transform.LookAt(screenCenter);
             float scale = UnityEngine.Random.Range(minimumScale, maximumScale);
 
-            asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
+            //asteroidObject.transform.localScale = new Vector3(scale, scale, scale);
+            //hyperAsteroidObject.transform.localScale = new Vector3(scale, scale, scale);
         }
         // Level 3 
         else if (playedTime > 300 && playedTime <= 450)
@@ -263,7 +265,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(playedTime);
+        //Debug.Log(playedTime);
         if (cheaterDetected)
         {
             Debug.Log("'I would prefer even to fail with honor than win by cheating' - Sophocles");
@@ -295,7 +297,7 @@ public class GameController : MonoBehaviour
             if (!FindPlayer())
             {
                 playerExpire -= Time.deltaTime;
-                if (playerExpire <= 15 && !findPlayer)
+                if (playerExpire <= 10 && !findPlayer)
                 {
                     InvokeRepeating("PlayImpact", 0.0f, 1.0f);
                     InvokeRepeating("DepleteHealth", 0.0f, 1.0f);
@@ -345,7 +347,7 @@ public class GameController : MonoBehaviour
     // Deplete player health when player has been offscreen for more than 30 seconds
     void DepleteHealth()
     {
-        player.GetComponent<PlayerHealth>().DealDamage(10);
+        player.GetComponent<PlayerHealth>().DealDamage(5);
         findPlayer = true;
     }
 
@@ -424,18 +426,6 @@ public class GameController : MonoBehaviour
         }
         SceneManager.LoadScene("MainMenu");
     }
-
-    //public void SetAddress()
-    //{
-    //    StartCoroutine(SetWalletAddress(playerNameInput.text, Convert.ToInt32(scoreValue.GetComponent<Text>().text), WalletAddress()));
-    //}
-
-    //IEnumerator SetWalletAddress(string name, int score, string address)
-    //{
-    //    string URL = setURL + name + ": " + score + ": " + address;
-    //    UnityWebRequest www = new UnityWebRequest(URL);
-    //    yield return www.SendWebRequest();
-    //}
 
     public void UpdateHealth(int health)
     {

@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             time -= Time.deltaTime;
         }
-        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) && rapidFireActive == false && spreadFireActive == false && hyperBlossomFireActive == false)
+        else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) && rapidFireActive == false && spreadFireActive == false && hyperBlossomFireActive == false && GetFuel() > 0)
         {
             UseFuel();
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
@@ -87,55 +87,53 @@ public class PlayerController : MonoBehaviour
         }
         else if (hyperBlossomFireActive)
         {
-            AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
             Instantiate(lazer, transform.TransformPoint(Vector3.forward * 2), transform.rotation);
-            transform.Rotate(0, 360f * Time.deltaTime, 0);
-
+            transform.Rotate(0, 360f * Time.deltaTime * 2, 0);
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && GetFuel() > 0)
         {
             UseFuel();
             GetComponent<Rigidbody>().AddForce(transform.forward * movementSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && GetFuel() > 0)
         {
             UseFuel();
             GetComponent<Rigidbody>().AddForce(transform.forward * -movementSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && GetFuel() > 0)
         {
             UseFuel();
             transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && GetFuel() > 0)
         {
             UseFuel();
             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
         }
            
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) && GetFuel() > 0)
         {
             UseFuel();
             GetComponent<Rigidbody>().AddForce(transform.forward * movementSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) && GetFuel() > 0)
         {
             UseFuel();
             GetComponent<Rigidbody>().AddForce(transform.forward * -movementSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) && GetFuel() > 0)
         {
             UseFuel();
             transform.Rotate(-Vector3.up * rotationSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && GetFuel() > 0)
         {
             UseFuel();
             transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
@@ -144,7 +142,7 @@ public class PlayerController : MonoBehaviour
 
     void UseFuel()
     {
-        currentFuel -= 0.05f;
+        currentFuel -= 0.075f;
         gameController.UpdateFuel(currentFuel);
     }
 
@@ -165,7 +163,7 @@ public class PlayerController : MonoBehaviour
 
     public void ActivateHyperBlossomFirePowerUp()
     {
-        StartCoroutine(ToggleHyperBlossomFire(30f));
+        StartCoroutine(ToggleHyperBlossomFire(10f));
     }
 
     IEnumerator ToggleRapidFire(float duration)
@@ -185,7 +183,14 @@ public class PlayerController : MonoBehaviour
     IEnumerator ToggleHyperBlossomFire(float duration)
     {
         hyperBlossomFireActive = true;
+        InvokeRepeating("PlayShot", 0.1f, 0.1f);
         yield return new WaitForSecondsRealtime(duration);
+        CancelInvoke();
         hyperBlossomFireActive = false;
+    }
+
+    void PlayShot()
+    {
+        AudioSource.PlayClipAtPoint(lazerFire, 0.9f * Camera.main.transform.position + 0.1f * transform.position, lazerVolume);
     }
 }
