@@ -3356,6 +3356,11 @@ PrefabInstance:
       objectReference: {fileID: 513241079}
     - target: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
         type: 3}
+      propertyPath: gameServeAddress
+      value: 0xb676D95E2c83A6a7eAaA03b866cbCf4DB8c0f0C7
+      objectReference: {fileID: 0}
+    - target: {fileID: 846913901868589571, guid: 555488fc6af32a04ebb79e5072bc1e8d,
+        type: 3}
       propertyPath: asteroidObjects.Array.size
       value: 2
       objectReference: {fileID: 0}

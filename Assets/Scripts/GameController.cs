@@ -12,8 +12,10 @@ using CodeStage.AntiCheat.Detectors;
 // use web3.jslib
 // using Nethereum RPC
 using Nethereum.JsonRpc.UnityClient;
-// using contract definition
+// using leaderboard contract definition
 using LeaderboardContract.Contracts.Leaderboard.ContractDefinition;
+// using gamelog contract definition
+using GameLogContract.Contracts.GameLog.ContractDefinition;
 
 
 public class GameController : MonoBehaviour
@@ -73,14 +75,23 @@ public class GameController : MonoBehaviour
 
     public float playedTime;
 
+    private long gameSeed;
+
+    public string gameServeAddress;
+
     // use WalletAddress function from web3.jslib
     [DllImport("__Internal")] private static extern string WalletAddress();
-    //string setURL = "https://ndmaddhouse.com/PostAddress.php?name=";
     string url;
     string contractAddress;
+    string gameLogContractAddress;
 
     void Start()
     {
+        gameSeed = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
+
+        //StartCoroutine(SignAndSendGameServeAddress(gameServeAddress));
+        //StartCoroutine(SignAndSendGameInfo("asteroids", "0x89267B20f07A0AdD565C5f60e4abde37Cc55d6eD", 250000, gameSeed));
+
         ObscuredCheatingDetector.StartDetection(OnCheaterDetected);
         SpeedHackDetector.StartDetection(OnCheaterDetected);
 
@@ -113,6 +124,62 @@ public class GameController : MonoBehaviour
         // Set contract URL and address
         url = "https://data-seed-prebsc-1-s2.binance.org:8545/";
         contractAddress = "0x8c8559286612050B75a232e1ccDA5bEC8d771a5b";
+        gameLogContractAddress = "0xEBc9068f6dEAEdb959d8eb409e226054C562032D";
+    }
+
+    //private IEnumerator SignAndSendGameServeAddress(string gameServeAddress)
+    //{
+    //    yield return new WaitForSeconds(4);
+    //    var gameServeAddressRequest = new TransactionSignedUnityRequest(url, "2a135a7c4a0309f4e77a197d863803f2127ba31119d14fe5e91ae6f24e0ef2bf", 97);
+
+    //    if (gameServeAddress != null)
+    //    {
+    //        yield return gameServeAddressRequest.SignAndSendTransaction(new UpdateGameServeAddressFunction() { GameServeAddress = gameServeAddress }, gameLogContractAddress);
+    //    }
+    //    if (gameServeAddressRequest.Exception == null)
+    //    {
+    //        Debug.Log("Game Serve Address submitted tx: " + gameServeAddressRequest.Result);
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Error submitted tx: " + gameServeAddressRequest.Exception.Message);
+    //    }
+    //}
+
+    //private IEnumerator SignAndSendGameInfo(string gameId, string userAddress, int score, long gameSeed)
+    //{
+    //    yield return new WaitForSeconds(8);
+    //    var gameInfoRequest = new TransactionSignedUnityRequest(url, "2a135a7c4a0309f4e77a197d863803f2127ba31119d14fe5e91ae6f24e0ef2bf", 97);
+
+    //    if (gameId != null && userAddress != null)
+    //    {
+    //        yield return gameInfoRequest.SignAndSendTransaction(new UpdateGameInfoFunction() { GameId = gameId, UserAddress = userAddress, Score = score, GameSeed = gameSeed }, gameLogContractAddress);
+    //    }
+    //    if (gameInfoRequest.Exception == null)
+    //    {
+    //        Debug.Log("Game Info submitted tx: " + gameInfoRequest.Result);
+    //        StartCoroutine(ValidateGameSeed(gameSeed));
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Error submitted tx: " + gameInfoRequest.Exception.Message);
+    //    }
+    //}
+
+    private IEnumerator ValidateGameSeed(long gameSeed)
+    {
+        var queryRequest = new QueryUnityRequest<IsGameSeedAlreadyUsedFunction, IsGameSeedAlreadyUsedOutputDTOBase>("https://data-seed-prebsc-1-s2.binance.org:8545/", gameLogContractAddress);
+        yield return queryRequest.Query(new IsGameSeedAlreadyUsedFunction() { GameSeed = gameSeed }, gameLogContractAddress);
+        Debug.Log(gameSeed);
+        Debug.Log("Game Seed Validated: " + queryRequest.Result);
+        //if (queryRequest.Result.SeedUsed)
+        //{
+        //    Debug.Log("Seed already exists");
+        //}
+        //else
+        //{
+        //    Debug.Log("Seed does not already exist");
+        //}
     }
 
     private void OnCheaterDetected()
